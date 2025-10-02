@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home">
+    <section class="hero">
+        <h1>Split expenses, Not friendships</h1>
+        <p>
+            Track shared expenses with friends and family. Split bills, settle up
+            with PayPal, and keep everyone happy with transparent expense
+            tracking.
+        </p>
+        <div class="hero-buttons">
+            <button class="btn-primary">Start splitting</button>
+            <button class="demo-btn">View demo</button>
+        </div>
+    </section>
+    
+    <section class="features">
+        <h2>Everything you need to track shared expenses</h2>
+        <p>
+            Simple, Transparent and secure expense tracking for groups of any size
+        </p>
+        <div class="feature-cards">
+            <div class="home-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <h3>Group Expenses</h3>
+                <p>Track Shared expenses with Friends, roomates and travel groups</p>
+            </div>
+            
+            <div class="home-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
+                </svg>
+                <h3>Smart Splitting</h3>
+                <p>Automatically calculate who owes what with flexible splitting options</p>
+            </div>
+            
+            <div class="home-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <h3>Payments</h3>
+                <p>Integrated PayPal checkout for secure and easy settlements</p>
+            </div>
+            
+            <div class="home-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                <h3>Real-Time Sync</h3>
+                <p>Updates sync instantly across all devices and group members</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="action">
+        <div class="action-container">
+            <h3>Ready to simplify your shared expenses?</h3>
+            <p>
+                Join thousands of users who trust SplitWise to keep their finances
+                organized and their friendships intact.
+            </p>
+            <div class="action-buttons">
+                <button class="btn-primary">Get Started Free →</button>
+                <span class="note">✅ No credit card required</span>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

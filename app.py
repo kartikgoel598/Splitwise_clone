@@ -48,5 +48,32 @@ def signin():
     
     return render_template('signin.html', current_year=datetime.now().year)
 
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+    if request.method == 'Post':
+        email = request.form.get('email',"").strip().lower()
+        password= request.form.get('password',"")
+        username = request.form.get('username',"").strip()
+        if not username or not email or not password:
+            flash('all fields are required')
+            return redirect(url_for('signup'))
+        existing = supabase.table('users').select('id').eq('email',email).limit(1).execute()
+        if existing.data:
+            flash('email already registered')
+            return redirect(url_for('signup'))
+        encrypted_password = generate_password_hash(password)
+        result = supabase.table('users').insert({
+            'username':username,
+            'email':email,
+            'password':encrypted_password
+        }).execute()
+        if result.data:
+            session['user']=result.data[0]
+            flash('account cretaed successfully')
+            return redirect(url_for('dashboard'))
+        else:
+            flash('account creation failed')
+            return redirect(url_for('signup'))
+
 if __name__ == '__main__':
     app.run(debug=True)

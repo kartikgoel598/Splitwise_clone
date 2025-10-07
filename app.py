@@ -40,17 +40,29 @@ def home():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        print(f"Sign in attempt - Email: {email}")
-        # Add your authentication logic here
-        return redirect(url_for('home'))
+        email = request.form.get('email',' ')
+        password = request.form.get('password', " ")
+        user_data = supabase.table('users').select('*').eq("email",email).limit(1).execute()
+        user = (user_data.data or [None])[0]
+        if not user:
+            flash('No account with that email',"error")
+            return redirect(url_for('signin'))
+        if not check_password_hash(user['password'],password):
+            flash('Incorrect password', "error")
+            return redirect(url_for('signin'))
+        session['user_id']= user['id']
+        session['username'] = user['username']
+        flash(f"welcome back, {user['username']}!",'success')
+        page_to_redirect_to = request.args.get('next') or url_for('dashboard')
+        return redirect(page_to_redirect_to)
+
+    
     
     return render_template('signin.html', current_year=datetime.now().year)
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
-    if request.method == 'Post':
+    if request.method == 'POST':
         email = request.form.get('email',"").strip().lower()
         password= request.form.get('password',"")
         username = request.form.get('username',"").strip()
@@ -74,6 +86,13 @@ def signup():
         else:
             flash('account creation failed')
             return redirect(url_for('signup'))
+    return render_template('signup.html', current_year=datetime.now().year)
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("Logged out successfully.", "info")
+    return redirect(url_for("signin"))
 
 if __name__ == '__main__':
     app.run(debug=True)

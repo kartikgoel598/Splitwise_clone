@@ -12,6 +12,15 @@
 </head>
 <body>
     {% include 'components/navbar.html' %}
+    {% if get_flashed_messages(with_categories=true) %}
+  <div class="flash-container">
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="flash flash-{{ category }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
     
     <main class="flex-1">
         {% block content %}{% endblock %}

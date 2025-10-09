@@ -17,10 +17,10 @@
             <p>Create your Splitwise account</p>
         </div>
 
-        <form method="POST" action="{{ url_for('signup') }}" class="signin-form">
+        <form method="POST" action="{{ url_for('auth.signup') }}" class="signin-form">
             {{ form_input(
-                label="Name",
-                id="name",
+                label="username",
+                id="username",
                 placeholder="Enter your name",
                 required=true
             ) }}
@@ -59,7 +59,7 @@
         <div class="signin-footer">
             <p>
                 Already have an account?
-                <a href="{{ url_for('signin') }}" class="signup-link">Sign in</a>
+                <a href="{{ url_for('auth.signin') }}" class="signup-link">Sign in</a>
             </p>
         </div>
     </div>

@@ -17,7 +17,7 @@
             <p>Sign in to track your shared expenses</p>
         </div>
         
-        <form method="POST" action="/signin" class="signin-form">
+        <form method="POST" action="{{ url_for('auth.signin') }}" class="signin-form">
             {{ form_input(
                 label="Email",
                 type="email",
@@ -52,7 +52,7 @@
         <div class="signin-footer">
             <p>
                 Don't have an account? 
-                <a href="/signup" class="signup-link">Sign up</a>
+                <a href="{{ url_for('auth.signup') }}" class="signup-link">Sign up</a>
             </p>
         </div>
     </div>

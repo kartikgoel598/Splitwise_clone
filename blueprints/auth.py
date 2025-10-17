@@ -2,16 +2,19 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from werkzeug.security import generate_password_hash, check_password_hash
 from services.db import supabase
 from datetime import datetime
+from forms.auth import SignInForm, SignUpForm
+
 
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/signin', methods=['GET', 'POST'])
 def signin():
-    if request.method == 'POST':
-        email = request.form.get('email',' ')
-        password = request.form.get('password', " ")
-        user_data = supabase.table('users').select('*').eq("email",email).limit(1).execute()
-        user = (user_data.data or [None])[0]
+    form = SignInForm()
+    if form.validate_on_submit():
+        email = form.email.data.strip().lower()
+        password = form.password.data
+        result = supabase.table('users').select('*').eq('email',email).limit(1).execute()
+        user = (result.data or [None])[0]
         if not user:
             flash('No account with that email',"error")
             return redirect(url_for('auth.signin'))
@@ -23,17 +26,20 @@ def signin():
         flash(f"welcome back, {user['username']}!",'success')
         page_to_redirect_to = request.args.get('next') or url_for('dashboard')
         return redirect(page_to_redirect_to)
-
-    
-    
-    return render_template('signin.html', current_year=datetime.now().year)
+    return render_template('signin.html', current_year=datetime.now().year, form=form)
 
 @auth_bp.route('/signup', methods=['GET','POST'])
 def signup():
-    if request.method == 'POST':
-        email = request.form.get('email',"").strip().lower()
-        password= request.form.get('password',"")
-        username = request.form.get('username',"").strip()
+    form = SignUpForm()
+    if form.validate_on_submit():
+        email = form.email.data.strip().lower()
+        password= form.password.data
+        username = form.username.data.strip()
+        confirm_email = form.confirm_email.data.strip().lower()
+        confirm_password = form.confirm_password.data
+        if (email != confirm_email) or (password != confirm_password):
+            flash('email or password confirmation do not match')
+            return redirect(url_for('auth.signup'))
         if not username or not email or not password:
             flash('all fields are required')
             return redirect(url_for('auth.signup'))
@@ -55,7 +61,7 @@ def signup():
             flash('account creation failed')
             return redirect(url_for('auth.signup'))
         
-    return render_template('signup.html', current_year=datetime.now().year)
+    return render_template('signup.html', current_year=datetime.now().year,form=form)
 
 @auth_bp.route("/logout")
 def logout():

@@ -4,11 +4,13 @@ from services.db import supabase
 import os 
 from blueprints.auth import auth_bp
 from services.login_required import login_required
+from flask_wtf import CSRFProtect
 
 
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', "dev-secret")
+csrf = CSRFProtect(app)
 
 
 

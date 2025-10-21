@@ -1,0 +1,400 @@
+/* ===== ACTIVITY PAGE STYLING ===== */
+
+/* page header - title aur export button */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* page title */
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+}
+
+/* export button - CSV/PDF download ke liye future me */
+.export-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 28px;
+    background: #667eea; /* purple */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.export-btn:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.export-btn:active {
+    transform: translateY(0);
+}
+
+/* ===== FILTERS SECTION ===== */
+.filters-section {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* mobile pe wrap ho jayega */
+    align-items: center;
+}
+
+/* search box container */
+.search-box {
+    position: relative;
+    flex: 1; /* available space le lega */
+    min-width: 250px; /* minimum width */
+}
+
+/* search input field */
+.search-input {
+    width: 100%;
+    padding: 12px 45px 12px 15px; /* right me icon ke liye space */
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+/* search input focus - border green ho jayega */
+.search-input:focus {
+    outline: none;
+    border-color: #1cc29f;
+    box-shadow: 0 0 0 3px rgba(28, 194, 159, 0.1);
+}
+
+/* search icon - input ke andar right side */
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    pointer-events: none; /* click na ho */
+}
+
+/* filter buttons container */
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* individual filter button */
+.filter-btn {
+    padding: 10px 20px;
+    background: #f7fafc; /* light gray */
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* text ek line me */
+}
+
+/* filter button hover */
+.filter-btn:hover {
+    background: #edf2f7;
+    border-color: #cbd5e0;
+}
+
+/* active filter button - green */
+.filter-btn.active {
+    background: #1cc29f;
+    color: white;
+    border-color: #1cc29f;
+}
+
+/* ===== ACTIVITY TIMELINE ===== */
+.activity-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* har transaction item */
+.activity-item {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* item hover - thoda upar uthe */
+.activity-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* left side - icon circle with vertical line */
+.activity-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0; /* size fixed rahe */
+    position: relative;
+}
+
+/* icon colors - transaction type ke according */
+.activity-icon.owe-icon {
+    background: #fee; /* light red */
+}
+
+.activity-icon.owed-icon {
+    background: #e6fffa; /* light green */
+}
+
+.activity-icon.settled-icon {
+    background: #f7fafc; /* light gray */
+}
+
+/* vertical connecting line between icons */
+.activity-item:not(:last-child) .activity-icon::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 20px; /* line ki height */
+    background: #e2e8f0;
+}
+
+/* emoji icon inside circle */
+.icon-emoji {
+    font-size: 24px;
+}
+
+/* right side - transaction details */
+.activity-content {
+    flex: 1; /* remaining space le lega */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* header - title aur amount side by side */
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+/* transaction title */
+.activity-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
+
+/* transaction amount */
+.activity-amount {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap; /* wrap na ho */
+}
+
+/* amount colors - type ke according */
+.activity-amount.owe {
+    color: #ff6b6b; /* red - mujhe dena hai */
+}
+
+.activity-amount.owed {
+    color: #1cc29f; /* green - mujhe milna hai */
+}
+
+.activity-amount.settled {
+    color: #a0aec0; /* gray - settled */
+}
+
+/* transaction details - group aur paid by */
+.activity-details {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.activity-group,
+.activity-paidby {
+    font-size: 14px;
+    color: #718096;
+    margin: 0;
+}
+
+/* date aur time */
+.activity-date {
+    font-size: 13px;
+    color: #a0aec0;
+    margin: 0;
+}
+
+/* ===== NO RESULTS MESSAGE ===== */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-results p {
+    font-size: 20px;
+    color: #4a5568;
+    margin: 0 0 10px 0;
+}
+
+.no-results-sub {
+    font-size: 15px;
+    color: #a0aec0;
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+
+body.dark-mode .page-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .filters-section {
+    background: #2d3748;
+}
+
+body.dark-mode .search-input {
+    background: #1a202c;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .search-input:focus {
+    border-color: #1cc29f;
+}
+
+body.dark-mode .filter-btn {
+    background: #1a202c;
+    color: #e2e8f0;
+    border-color: #4a5568;
+}
+
+body.dark-mode .filter-btn:hover {
+    background: #374151;
+}
+
+body.dark-mode .filter-btn.active {
+    background: #1cc29f;
+    color: white;
+}
+
+body.dark-mode .activity-item {
+    background: #2d3748;
+}
+
+body.dark-mode .activity-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .activity-group,
+body.dark-mode .activity-paidby {
+    color: #a0aec0;
+}
+
+body.dark-mode .activity-icon.owe-icon {
+    background: #3d1f1f;
+}
+
+body.dark-mode .activity-icon.owed-icon {
+    background: #1a3d35;
+}
+
+body.dark-mode .activity-icon.settled-icon {
+    background: #1a202c;
+}
+
+body.dark-mode .no-results {
+    background: #2d3748;
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+    /* header stack ho jayega */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .page-title {
+        font-size: 26px;
+    }
+    
+    /* export button full width */
+    .export-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* filters stack ho jayenge */
+    .filters-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    /* filter buttons full width */
+    .filter-buttons {
+        width: 100%;
+    }
+    
+    .filter-btn {
+        flex: 1; /* equal width */
+        min-width: 0;
+    }
+    
+    /* activity item vertical layout */
+    .activity-header {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .activity-amount {
+        align-self: flex-start;
+    }
+}

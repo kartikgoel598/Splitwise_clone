@@ -13,7 +13,7 @@ def index():
     groups = res.data or []
     return render_template('groups/index.html', groups=groups)
 
-@group_bp.route('create',methods=['POST','GET'])
+@group_bp.route('/create',methods=['POST','GET'])
 @login_required
 def create_group():
     if request.method == 'POST':

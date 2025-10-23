@@ -22,12 +22,12 @@ def year():
 @app.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template('home.html', current_year=datetime.now().year) 
+    return render_template('index.html', current_year=datetime.now().year) 
     
 
 @app.route('/')
-def home():
-    return render_template('home.html', current_year=datetime.now().year)
+def landing():
+    return render_template('landing.html', current_year=datetime.now().year)
 
 app.register_blueprint(auth_bp )
 

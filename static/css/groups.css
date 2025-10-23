@@ -1,0 +1,215 @@
+/* ===== GROUPS PAGE KI STYLING ===== */
+
+/* top me header - title aur button side by side */
+.page-header {
+    display: flex;
+    justify-content: space-between; /* title left, button right */
+    align-items: center; /* vertically center */
+    margin-bottom: 40px; /* neeche space */
+    flex-wrap: wrap; /* mobile pe wrap ho jayega */
+    gap: 20px; /* items ke beech gap */
+}
+
+/* "My Groups" heading ki styling */
+.page-title {
+    font-size: 32px;
+    font-weight: 700; /* bold */
+    color: #2d3748; /* dark gray */
+    margin: 0; /* default margin hata di */
+}
+
+/* "Create Group" button */
+.create-group-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* icon aur text ke beech space */
+    padding: 12px 28px;
+    background: #1cc29f; /* green color - splitwise jaisa */
+    color: white;
+    border: none;
+    border-radius: 8px; /* rounded corners */
+    font-size: 16px;
+    font-weight: 600; /* semi-bold */
+    cursor: pointer; /* hand cursor on hover */
+    transition: all 0.3s ease; /* smooth animation */
+    box-shadow: 0 2px 8px rgba(28, 194, 159, 0.3); /* light shadow */
+}
+
+/* button ke andar + wala icon */
+.btn-icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* button pe hover karne pe - thoda dark ho aur upar uthe */
+.create-group-btn:hover {
+    background: #17a085; /* darker green */
+    transform: translateY(-2px); /* 2px upar */
+    box-shadow: 0 4px 12px rgba(28, 194, 159, 0.4); /* bada shadow */
+}
+
+/* button click karne pe - thoda press ho */
+.create-group-btn:active {
+    transform: translateY(0); /* wapas normal position */
+}
+
+/* ===== GROUPS KI GRID LAYOUT ===== */
+.groups-grid {
+    display: grid;
+    /* responsive grid - minimum 300px width chahiye har card ko */
+    /* jitni jagah hai utne cards fit ho jayenge automatically */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px; /* cards ke beech gap */
+}
+
+/* ===== HAR GROUP CARD KI STYLING ===== */
+.group-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px; /* rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* subtle shadow */
+    cursor: pointer; /* clickable hai ye batane ke liye */
+    transition: all 0.3s ease; /* smooth animations */
+    display: flex;
+    flex-direction: column; /* items upar neeche */
+    gap: 15px; /* items ke beech space */
+    position: relative;
+    overflow: hidden;
+}
+
+/* card pe hover karne pe - upar uthe aur shadow badhe */
+.group-card:hover {
+    transform: translateY(-5px); /* 5px upar */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* bada shadow */
+}
+
+/* card click karne pe - thoda press ho jaye */
+.group-card:active {
+    transform: translateY(-2px); /* thoda kam upar */
+}
+
+/* group ka emoji icon */
+.group-icon {
+    font-size: 48px; /* bada emoji */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* group info section - naam aur members */
+.group-info {
+    text-align: center;
+}
+
+/* group ka naam */
+.group-name {
+    font-size: 20px;
+    font-weight: 600; /* semi-bold */
+    color: #2d3748;
+    margin: 0 0 5px 0; /* neeche 5px gap */
+}
+
+/* "4 members" wala text */
+.group-members {
+    font-size: 14px;
+    color: #718096; /* light gray */
+    margin: 0;
+}
+
+/* balance section - kitna lena dena hai */
+.group-balance {
+    text-align: center;
+    padding-top: 15px; /* upar space */
+    border-top: 1px solid #e2e8f0; /* upar thin line */
+}
+
+/* "Your balance" label */
+.balance-label {
+    font-size: 12px;
+    color: #a0aec0; /* light gray */
+    margin: 0 0 5px 0;
+    text-transform: uppercase; /* capital letters me */
+    letter-spacing: 0.5px; /* letters ke beech thoda gap */
+}
+
+/* balance amount - base styling */
+.balance-amount {
+    font-size: 24px;
+    font-weight: 700; /* bold */
+    margin: 0;
+}
+
+/* negative balance = mujhe dena hai - red color */
+.balance-amount.negative {
+    color: #ff6b6b;
+}
+
+/* positive balance = mujhe milna hai - green color */
+.balance-amount.positive {
+    color: #1cc29f;
+}
+
+/* settled = sab clear - gray color */
+.balance-amount.settled {
+    color: #a0aec0;
+}
+
+/* ===== DARK MODE KE LIYE STYLING ===== */
+
+/* dark mode me page title */
+body.dark-mode .page-title {
+    color: #e2e8f0; /* light color */
+}
+
+/* dark mode me group cards */
+body.dark-mode .group-card {
+    background: #2d3748; /* dark background */
+}
+
+/* dark mode me group name */
+body.dark-mode .group-name {
+    color: #e2e8f0; /* light text */
+}
+
+/* dark mode me members count */
+body.dark-mode .group-members {
+    color: #a0aec0; /* lighter gray */
+}
+
+/* dark mode me balance section ki border */
+body.dark-mode .group-balance {
+    border-top-color: #4a5568; /* darker border */
+}
+
+/* ===== MOBILE/TABLET KE LIYE RESPONSIVE ===== */
+
+/* tablet size - 2 ya 1 column ho jayega depending on width */
+@media (max-width: 968px) {
+    .groups-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+/* mobile size - adjustments */
+@media (max-width: 768px) {
+    /* header items stack ho jayenge - title upar, button neeche */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start; /* left align */
+    }
+    
+    /* title chhota ho jayega mobile pe */
+    .page-title {
+        font-size: 26px;
+    }
+    
+    /* button full width le lega */
+    .create-group-btn {
+        width: 100%;
+        justify-content: center; /* text center me */
+    }
+    
+    /* grid me ek hi column - cards ek line me */
+    .groups-grid {
+        grid-template-columns: 1fr;
+    }
+}

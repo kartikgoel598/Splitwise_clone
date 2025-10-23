@@ -1,0 +1,282 @@
+/* ===== FRIENDS PAGE KI STYLING ===== */
+
+/* page header - title aur add button */
+.page-header {
+    display: flex;
+    justify-content: space-between; /* left-right space */
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap; /* mobile pe wrap ho */
+    gap: 20px;
+}
+
+/* "My Friends" heading */
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+}
+
+/* "Add Friend" button */
+.add-friend-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 28px;
+    background: #1cc29f; /* green color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(28, 194, 159, 0.3);
+}
+
+/* button ka + icon */
+.btn-icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* button hover - thoda upar aur dark */
+.add-friend-btn:hover {
+    background: #17a085;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(28, 194, 159, 0.4);
+}
+
+/* button click - press effect */
+.add-friend-btn:active {
+    transform: translateY(0);
+}
+
+/* ===== FRIENDS LIST LAYOUT ===== */
+.friends-list {
+    display: flex;
+    flex-direction: column; /* items upar neeche stack honge */
+    gap: 20px; /* cards ke beech gap */
+}
+
+/* ===== HAR FRIEND CARD KI STYLING ===== */
+.friend-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between; /* left-right space */
+    align-items: center;
+    cursor: pointer; /* clickable */
+    transition: all 0.3s ease;
+}
+
+/* card hover - upar uthe */
+.friend-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== FRIEND PROFILE SECTION (LEFT SIDE) ===== */
+.friend-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1; /* available space le lega */
+}
+
+/* profile picture (emoji) */
+.friend-avatar {
+    font-size: 48px; /* bada emoji */
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f7fafc; /* light gray background */
+    border-radius: 50%; /* circle shape */
+}
+
+/* friend details - naam aur activity */
+.friend-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* friend ka naam */
+.friend-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
+
+/* last activity text */
+.friend-activity {
+    font-size: 14px;
+    color: #718096; /* light gray */
+    margin: 0;
+}
+
+/* ===== FRIEND ACTIONS SECTION (RIGHT SIDE) ===== */
+.friend-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* balance info */
+.friend-balance {
+    text-align: right;
+    min-width: 120px; /* consistent width */
+}
+
+/* balance label - "You owe" / "Owes you" */
+.balance-text {
+    font-size: 13px;
+    margin: 0 0 5px 0;
+    font-weight: 500;
+}
+
+/* balance text colors - red/green/gray */
+.balance-text.owe {
+    color: #ff6b6b; /* red - mujhe dena hai */
+}
+
+.balance-text.owed {
+    color: #1cc29f; /* green - mujhe milna hai */
+}
+
+.balance-text.settled {
+    color: #a0aec0; /* gray - settled */
+}
+
+/* balance amount */
+.balance-amount {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* amount colors */
+.balance-amount.owe {
+    color: #ff6b6b;
+}
+
+.balance-amount.owed {
+    color: #1cc29f;
+}
+
+.balance-amount.settled {
+    color: #a0aec0;
+}
+
+/* ===== SETTLE UP BUTTON ===== */
+.settle-btn {
+    padding: 10px 24px;
+    background: #667eea; /* purple button */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* text ek line me rahe */
+}
+
+/* settle button hover */
+.settle-btn:hover {
+    background: #5568d3;
+    transform: scale(1.05);
+}
+
+/* settle button click */
+.settle-btn:active {
+    transform: scale(1);
+}
+
+/* disabled button - jab settled ho */
+.settle-btn.disabled {
+    background: #e2e8f0; /* light gray */
+    color: #a0aec0;
+    cursor: not-allowed; /* no click cursor */
+}
+
+.settle-btn.disabled:hover {
+    transform: none; /* no animation */
+    background: #e2e8f0;
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+
+body.dark-mode .page-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .friend-card {
+    background: #2d3748;
+}
+
+body.dark-mode .friend-name {
+    color: #e2e8f0;
+}
+
+body.dark-mode .friend-activity {
+    color: #a0aec0;
+}
+
+body.dark-mode .friend-avatar {
+    background: #1a202c;
+}
+
+body.dark-mode .settle-btn.disabled {
+    background: #4a5568;
+    color: #718096;
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+    /* header stack ho jayega */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    /* title chhoti */
+    .page-title {
+        font-size: 26px;
+    }
+    
+    /* button full width */
+    .add-friend-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* friend card stack ho jayega */
+    .friend-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    /* profile full width */
+    .friend-profile {
+        width: 100%;
+    }
+    
+    /* actions full width aur horizontal */
+    .friend-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    /* balance left align */
+    .friend-balance {
+        text-align: left;
+    }
+}

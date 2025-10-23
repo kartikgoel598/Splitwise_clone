@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- basic HTML5 setup -->
+    <meta charset="UTF-8">
+    <!-- mobile responsive ke liye -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends - Split Wisely</title>
+    
+    <!-- main dashboard wali CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <!-- friends page ki apni CSS -->
+    <link rel="stylesheet" href="../static/css/friends.css">
+</head>
+<body>
+    
+    <!-- top navbar - same sabhi pages pe -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- left me logo -->
+            <h1 class="logo">Splitwisely</h1>
+            
+            <!-- navigation menu -->
+            <ul class="nav-links">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="groups.html">Groups</a></li>
+                <!-- current page hai friends - active class laga di -->
+                <li><a href="friends.html" class="active">Friends</a></li>
+                <li><a href="activity.html">Activity</a></li>
+            </ul>
+            
+            <!-- user greeting -->
+            <div class="user-profile">
+                <span>Hi, User!</span>
+            </div>
+            
+            <!-- dark mode toggle switch -->
+            <div class="theme-toggle">
+                <input type="checkbox" id="themeToggle" class="toggle-checkbox">
+                <label for="themeToggle" class="toggle-label">
+                    <span class="toggle-ball">
+                        <!-- sun icon - light mode -->
+                        <svg class="icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <!-- moon icon - dark mode -->
+                        <svg class="icon moon-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main content area -->
+    <div class="main-container">
+        
+        <!-- page header - title aur add friend button -->
+        <div class="page-header">
+            <h1 class="page-title">My Friends</h1>
+            <!-- naya friend add karne ka button -->
+            <button class="add-friend-btn" id="addFriendBtn">
+                <span class="btn-icon">+</span>
+                Add Friend
+            </button>
+        </div>
+
+        <!-- friends list - har friend ka card -->
+        <div class="friends-list">
+            
+            <!-- Friend 1: Kartik - mujhe paisa dena hai -->
+            <div class="friend-card" data-friend-id="1">
+                <!-- left side - profile pic aur naam -->
+                <div class="friend-profile">
+                    <!-- emoji as profile picture -->
+                    <div class="friend-avatar">👨‍💼</div>
+                    <div class="friend-details">
+                        <!-- friend ka naam -->
+                        <h3 class="friend-name">Kartik</h3>
+                        <!-- last activity - kab last expense add kiya -->
+                        <p class="friend-activity">Last expense: 2 days ago</p>
+                    </div>
+                </div>
+                
+                <!-- right side - balance aur settle button -->
+                <div class="friend-actions">
+                    <div class="friend-balance">
+                        <!-- negative = mujhe dena hai - red text -->
+                        <p class="balance-text owe">You owe</p>
+                        <p class="balance-amount owe">$125</p>
+                    </div>
+                    <!-- settle up button - payment karne ke liye -->
+                    <button class="settle-btn" data-friend="Kartik" data-amount="125">
+                        Settle Up
+                    </button>
+                </div>
+            </div>
+
+            <!-- Friend 2: Vishesh - mujhe paisa milna hai -->
+            <div class="friend-card" data-friend-id="2">
+                <div class="friend-profile">
+                    <div class="friend-avatar">🧑‍💻</div>
+                    <div class="friend-details">
+                        <h3 class="friend-name">Vishesh</h3>
+                        <p class="friend-activity">Last expense: 5 days ago</p>
+                    </div>
+                </div>
+                <div class="friend-actions">
+                    <div class="friend-balance">
+                        <!-- positive = mujhe milna hai - green text -->
+                        <p class="balance-text owed">Owes you</p>
+                        <p class="balance-amount owed">$230</p>
+                    </div>
+                    <button class="settle-btn" data-friend="Vishesh" data-amount="230">
+                        Remind
+                    </button>
+                </div>
+            </div>
+
+            <!-- Friend 3: Rikhil - settled hai -->
+            <div class="friend-card" data-friend-id="3">
+                <div class="friend-profile">
+                    <div class="friend-avatar">👨‍🎓</div>
+                    <div class="friend-details">
+                        <h3 class="friend-name">Rikhil</h3>
+                        <p class="friend-activity">Last expense: 1 week ago</p>
+                    </div>
+                </div>
+                <div class="friend-actions">
+                    <div class="friend-balance">
+                        <!-- settled = kuch lena dena nahi - gray text -->
+                        <p class="balance-text settled">Settled up</p>
+                        <p class="balance-amount settled">$0</p>
+                    </div>
+                    <button class="settle-btn disabled" disabled>
+                        All Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Friend 4:  -->
+            <div class="friend-card" data-friend-id="4">
+                <div class="friend-profile">
+                    <div class="friend-avatar">👩‍💼</div>
+                    <div class="friend-details">
+                        <h3 class="friend-name">Samullah</h3>
+                        <p class="friend-activity">Last expense: 3 days ago</p>
+                    </div>
+                </div>
+                <div class="friend-actions">
+                    <div class="friend-balance">
+                        <p class="balance-text owe">You owe</p>
+                        <p class="balance-amount owe">$85</p>
+                    </div>
+                    <button class="settle-btn" data-friend="Samullah" data-amount="85">
+                        Settle Up
+                    </button>
+                </div>
+            </div>
+
+            <!-- Friend 5: Santosh -->
+            <div class="friend-card" data-friend-id="5">
+                <div class="friend-profile">
+                    <div class="friend-avatar">🧑‍🚀</div>
+                    <div class="friend-details">
+                        <h3 class="friend-name">Santosh</h3>
+                        <p class="friend-activity">Last expense: yesterday</p>
+                    </div>
+                </div>
+                <div class="friend-actions">
+                    <div class="friend-balance">
+                        <p class="balance-text owed">Owes you</p>
+                        <p class="balance-amount owed">$420</p>
+                    </div>
+                    <button class="settle-btn" data-friend="Santosh" data-amount="420">
+                        Remind
+                    </button>
+                </div>
+            </div>
+
+            <!-- Friend 6: Wilson -->
+            <div class="friend-card" data-friend-id="6">
+                <div class="friend-profile">
+                    <div class="friend-avatar">👩‍🎨</div>
+                    <div class="friend-details">
+                        <h3 class="friend-name">Wilson</h3>
+                        <p class="friend-activity">Last expense: 4 days ago</p>
+                    </div>
+                </div>
+                <div class="friend-actions">
+                    <div class="friend-balance">
+                        <p class="balance-text owe">You owe</p>
+                        <p class="balance-amount owe">$60</p>
+                    </div>
+                    <button class="settle-btn" data-friend="Wilson" data-amount="60">
+                        Settle Up
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript files -->
+    <!-- pehle main app.js - dark mode ke liye -->
+    <script src="../static/js/app.js"></script>
+    <!-- phir friends.js - friend cards aur buttons ke liye -->
+    <script src="../static/js/friends.js"></script>
+</body>
+</html>

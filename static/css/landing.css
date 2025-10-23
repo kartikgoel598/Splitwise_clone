@@ -1,0 +1,219 @@
+/* ===== RESET & BASIC ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ===== ANIMATED BACKGROUND PARTICLES ===== */
+.particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 15s infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(50px);
+        opacity: 0;
+    }
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    text-align: center;
+    z-index: 10;
+    max-width: 900px;
+    padding: 40px;
+}
+
+/* ===== TEXT LOGO ANIMATION - NETFLIX STYLE ===== */
+.logo-container {
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: netflixFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes netflixFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.text-logo {
+    font-size: 80px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 8px;
+    text-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.5),
+        0 0 40px rgba(255, 255, 255, 0.3),
+        0 10px 30px rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
+/* ===== SLOGAN WITH SMOOTH FADE-IN ===== */
+.slogan {
+    font-size: 64px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 30px;
+    line-height: 1.2;
+    text-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    animation: fadeInSlogan 1s ease 0.8s forwards;
+    letter-spacing: -1px;
+}
+
+@keyframes fadeInSlogan {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slogan-highlight {
+    background: linear-gradient(120deg, #ffd89b 0%, #2cdeee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== SUBTITLE ===== */
+.subtitle {
+    font-size: 26px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 60px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeInUp 1s ease 1.3s forwards;
+    line-height: 1.5;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== GET STARTED BUTTON ===== */
+.cta-button {
+    display: inline-block;
+    padding: 22px 70px;
+    background: white;
+    color: #667eea;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 1s ease 1.6s forwards;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 1px;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(102, 126, 234, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.cta-button:hover::before {
+    width: 350px;
+    height: 350px;
+}
+
+.cta-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cta-button:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .text-logo {
+        font-size: 50px;
+        letter-spacing: 4px;
+    }
+
+    .slogan {
+        font-size: 40px;
+    }
+    
+    .subtitle {
+        font-size: 18px;
+        margin-bottom: 40px;
+    }
+
+    .cta-button {
+        padding: 18px 50px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-logo {
+        font-size: 36px;
+        letter-spacing: 2px;
+    }
+
+    .slogan {
+        font-size: 32px;
+    }
+    
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .cta-button {
+        padding: 16px 40px;
+        font-size: 18px;
+    }
+}

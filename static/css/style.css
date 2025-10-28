@@ -39,7 +39,46 @@ body {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 0; /* gap hata di - fixed width use karenge */
+}
+
+/* har nav item ko fixed width diya - alignment ke liye */
+.nav-links li {
+    width: 120px; /* sab items same width */
+    text-align: center; /* text center me */
+}
+
+.nav-links a {
+    display: block; /* full width clickable */
+    padding: 8px 0; /* consistent padding */
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* hover effect - underline animation */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: white;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 80%; /* underline width */
+}
+
+.nav-links a:hover {
+    opacity: 1;
 }
 
 .nav-links a {
@@ -54,9 +93,30 @@ body {
     opacity: 0.8;
 }
 
+/* ===== USER PROFILE COLOR FIX ===== */
+
+/* user profile - light mode me BLACK, dark mode me WHITE */
 .user-profile {
-    color: white;
     font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* light mode - BLACK text (navbar green pe) */
+body:not(.dark-mode) .user-profile span {
+    color: #1a202c; /* dark black */
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3); /* white shadow for contrast */
+}
+
+/* dark mode - WHITE text (navbar dark pe) */
+body.dark-mode .user-profile span {
+    color: #ffffff; /* pure white */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* black shadow for depth */
+}
+
+/* extra bold for better visibility */
+.user-profile span {
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
 
 /* ===== MAIN CONTAINER ===== */
@@ -641,4 +701,24 @@ body,
 
 body.dark-mode .balance-card.total .amount.balance-zero {
     color: #e2e8f0 !important;
+}
+/* user profile text color - light mode */
+.user-profile {
+    color: white; /* navbar green pe white text */
+    font-weight: 500;
+}
+
+/* dark mode me bhi proper contrast chahiye */
+body.dark-mode .user-profile {
+    color: white; /* dark mode navbar pe bhi white */
+}
+
+/* agar navbar dark hai to text light */
+body.dark-mode .navbar {
+    background-color: #2d3748; /* dark navbar */
+}
+
+/* ensure visibility in both modes */
+.user-profile span {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* subtle shadow for readability */
 }

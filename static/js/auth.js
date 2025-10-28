@@ -26,35 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ===== LOGIN FORM SUBMISSION =====
-    const loginForm = document.getElementById('loginForm');
     
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // page reload na ho
             
-            // form values nikale
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
-            
-            console.log('Login attempt:', {
-                email: email,
-                rememberMe: rememberMe
-            });
-            
-            // validation check - basic
-            if (!email || !password) {
-                alert('Please fill in all fields! ⚠️');
-                return;
-            }
-            
-            // abhi alert dikha rahe - future me backend API call hogi
-            alert(`Login Successful! 🎉\n\nEmail: ${email}\nRemember Me: ${rememberMe ? 'Yes' : 'No'}\n\n(Backend authentication coming soon!)`);
-            
-            // future me ye line uncomment karenge - dashboard pe redirect
-            // window.location.href = 'index.html';
-        });
-    }
+        
     
     // ===== SIGNUP FORM SUBMISSION =====
     const signupForm = document.getElementById('signupForm');

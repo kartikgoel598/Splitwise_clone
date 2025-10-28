@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/css/mobile-responsive.css">
+    <title>Sign Up - Split Wisely</title>
+    <link rel="stylesheet" href="../static/css/auth.css">
+    <link rel="stylesheet" href="../static/css/page-transitions.css">
+</head>
+<body>
+    
+    <!-- background with particles -->
+    <div class="auth-background">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 85%; animation-delay: 3s;"></div>
+    </div>
+
+    <div class="auth-container">
+        
+        <div class="auth-card">
+            
+            <!-- header -->
+            <div class="auth-header">
+                <h1 class="auth-logo">SPLIT WISELY</h1>
+                <h2 class="auth-title">Create Account</h2>
+                <p class="auth-subtitle">Join us and start splitting expenses smartly</p>
+            </div>
+
+            <!-- signup form -->
+            <form class="auth-form" id="signupForm">
+                
+                <!-- full name -->
+                <div class="form-group">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="fullName" 
+                        class="form-input" 
+                        placeholder="VISHESH "
+                        required
+                    >
+                </div>
+
+                <!-- email -->
+                <div class="form-group">
+                    <label for="signupEmail" class="form-label">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="signupEmail" 
+                        class="form-input" 
+                        placeholder="your.email@example.com"
+                        required
+                    >
+                </div>
+
+                <!-- phone number - optional -->
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number (Optional)</label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        class="form-input" 
+                        placeholder="+64 xx xxx xxxx"
+                    >
+                </div>
+
+                <!-- password -->
+                <div class="form-group">
+                    <label for="signupPassword" class="form-label">Password</label>
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            id="signupPassword" 
+                            class="form-input" 
+                            placeholder="Create a strong password"
+                            required
+                        >
+                        <button type="button" class="password-toggle" id="toggleSignupPassword">
+                            👁️
+                        </button>
+                    </div>
+                    <!-- password strength indicator -->
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar"></div>
+                        <span class="strength-text">Password strength: <span id="strengthLabel">Weak</span></span>
+                    </div>
+                </div>
+
+                <!-- confirm password -->
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            class="form-input" 
+                            placeholder="Re-enter password"
+                            required
+                        >
+                        <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                            👁️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- terms and conditions checkbox -->
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span>I agree to the <a href="#" class="inline-link">Terms & Conditions</a></span>
+                    </label>
+                </div>
+
+                <!-- signup button -->
+                <button type="submit" class="auth-btn">
+                    Create Account
+                </button>
+
+            </form>
+
+            <!-- divider -->
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+
+            <!-- social signup -->
+            <div class="social-login">
+                <button class="social-btn google-btn">
+                    <span class="social-icon">🔍</span>
+                    Sign up with Google
+                </button>
+            </div>
+
+            <!-- login link -->
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html" class="auth-link">Sign In</a></p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/mobile-menu.js"></script>
+</body>
+</html>

@@ -12,8 +12,8 @@
         <div class="nav-container">
             <h1 class="logo">Splitwisely</h1>
             <ul class="nav-links">
-                <li><a href="index.html" class="active">Dashboard</a></li>
-                <li><a href="groups.html">Groups</a></li>
+                <li><a href="{{ url_for('dashboard') }}" class="active">Dashboard</a></li>
+                <li><a href="{{url_for('groups.index')}}">Groups</a></li>
                 <li><a href="friends.html">Friends</a></li>
                 <li><a href="activity.html">Activity</a></li>
             </ul>

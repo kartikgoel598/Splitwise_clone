@@ -9,9 +9,6 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/signin', methods=['GET', 'POST'])
 def signin():
     form = SignInForm()
-    print("🧾 Request method:", request.method)
-    print("🧾 Form validate_on_submit:", form.validate_on_submit())
-    print("🧾 Form errors:", form.errors)
     if form.validate_on_submit():
         email = form.email.data.strip().lower()
         password = form.password.data
@@ -32,6 +29,10 @@ def signin():
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignUpForm()
+    print("📩 Request method:", request.method)
+    print("📩 Form validate_on_submit:", form.validate_on_submit())
+    print("📩 Form errors:", form.errors)
+
     if form.validate_on_submit():
         username = form.username.data.strip()
         email = form.email.data.strip().lower()

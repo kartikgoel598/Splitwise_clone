@@ -1,184 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="../static/css/mobile-responsive.css">
+  <head>
+    <link rel="stylesheet" href="../static/css/mobile-responsive.css" />
     <title>Groups - Split Wisely</title>
-    
+
     <!-- dashboard wali main styling import kari -->
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css" />
     <!-- groups page ki apni alag CSS -->
-    <link rel="stylesheet" href="../static/css/groups.css">
-    <link rel="stylesheet" href="../static/css/page-transitions.css">
-</head>
-<body>
-    
-    <!-- top me navbar - same dashboard jaisa -->
+    <link rel="stylesheet" href="../static/css/groups.css" />
+    <link rel="stylesheet" href="../static/css/page-transitions.css" />
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-container">
-            <!-- left me logo/name -->
-            <h1 class="logo">Splitwisely</h1>
-            
-            <!-- menu links - 4 pages ke -->
-            <ul class="nav-links">
-                <li><a href="index.html">Dashboard</a></li>
-                <!-- yaha active class laga di kyunki ye current page hai -->
-                <li><a href="groups.html" class="active">Groups</a></li>
-                <li><a href="friends.html">Friends</a></li>
-                <li><a href="activity.html">Activity</a></li>
-            </ul>
-            
-            <!-- right me user ka naam -->
-            <div class="user-profile">
-                <span>Hi, PRAADA!</span>
-            </div>
-            
-            <!-- dark mode ka toggle switch -->
-            <div class="theme-toggle">
-                <!-- checkbox hidden hai, bas functionality ke liye -->
-                <input type="checkbox" id="themeToggle" class="toggle-checkbox">
-                <!-- label pe click karne se checkbox toggle hoga -->
-                <label for="themeToggle" class="toggle-label">
-                    <span class="toggle-ball">
-                        <!-- sun icon - light mode ke liye -->
-                        <svg class="icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <!-- center me circle -->
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <!-- 8 rays - har direction me ek -->
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                        <!-- moon icon - dark mode ke liye -->
-                        <svg class="icon moon-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <!-- crescent moon shape - path se complex shape banaya -->
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </span>
-                </label>
-            </div>
+      <div class="nav-container">
+        <h1 class="logo">Splitwisely</h1>
+        <ul class="nav-links">
+          <li><a href="{{url_for('dashboard')}}">Dashboard</a></li>
+          <li>
+            <a href="{{url_for('groups.index')}}" class="active">Groups</a>
+          </li>
+          <li><a href="friends.html">Friends</a></li>
+          <li><a href="activity.html">Activity</a></li>
+        </ul>
+        <div class="user-profile">
+          <span>Hi, PRAADA!</span>
         </div>
+        <div class="theme-toggle">
+          <input type="checkbox" id="themeToggle" class="toggle-checkbox" />
+          <label for="themeToggle" class="toggle-label">
+            <span class="toggle-ball"></span>
+          </label>
+        </div>
+      </div>
     </nav>
 
-    <!-- main content area -->
     <div class="main-container">
-        
-        <!-- top me heading aur create button -->
-        <div class="page-header">
-            <h1 class="page-title">My Groups</h1>
-            <!-- naya group banane ka button -->
-            <button class="create-group-btn" id="createGroupBtn">
-                <span class="btn-icon">+</span>
-                Create Group
-            </button>
+      <div class="page-header">
+        <h1 class="page-title">My Groups</h1>
+        <a
+          href="{{ url_for('groups.create_group') }}"
+          class="create-group-btn"
+          id="createGroupBtn"
+        >
+          <span class="btn-icon">+</span>
+          Create Group
+        </a>
+      </div>
+
+      <div class="groups-grid">
+    {% if groups %}
+        {% for g in groups %}
+        <div class="group-card" data-group-id="{{ g.id }}">
+            <div class="group-icon">👥</div>
+            <div class="group-info">
+                <h3 class="group-name">{{ g.name }}</h3>
+                <p class="group-members">
+                    {{ g.count }} member{{ 's' if g.count != 1 else '' }}
+                </p>
+            </div>
+            <div class="group-balance">
+                <p class="balance-label">Your balance</p>
+                <p class="balance-amount settled">$0</p>
+            </div>
         </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align:center; color:#a0aec0; margin-top:20px;">
+            You haven't created or joined any groups yet 😕<br>
+            Click <strong>Create Group</strong> to get started ✅
+        </p>
+    {% endif %}
+</div>
 
-        <!-- sab groups ki grid layout - responsive hai -->
-        <div class="groups-grid">
-            
-            <!-- Group 1: Flatmates - roommates ke expenses track karne ke liye -->
-            <div class="group-card" data-group-id="1">
-                <!-- emoji icon - home symbol -->
-                <div class="group-icon">🏠</div>
-                <div class="group-info">
-                    <!-- group ka naam -->
-                    <h3 class="group-name">Flatmates</h3>
-                    <!-- kitne log hain group me -->
-                    <p class="group-members">4 members</p>
-                </div>
-                <!-- is group me mera balance kitna hai -->
-                <div class="group-balance">
-                    <p class="balance-label">Your balance</p>
-                    <!-- negative = mujhe dena hai (red color) -->
-                    <p class="balance-amount negative">-$125</p>
-                </div>
-            </div>
+<script>document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.group-card');
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const groupId = card.dataset.groupId;
+      window.location.href = `/groups/${groupId}`;
+    });
+  });
+});
+</script>
 
-            <!-- Group 2: Trip - travel expenses ke liye -->
-            <div class="group-card" data-group-id="2">
-                <!-- plane emoji - trip indicate karta hai -->
-                <div class="group-icon">✈️</div>
-                <div class="group-info">
-                    <h3 class="group-name">Trip to Queenstown</h3>
-                    <p class="group-members">6 members</p>
-                </div>
-                <div class="group-balance">
-                    <p class="balance-label">Your balance</p>
-                    <!-- positive = mujhe milna hai (green color) -->
-                    <p class="balance-amount positive">+$340</p>
-                </div>
-            </div>
 
-            <!-- Group 3: Weekend friends -->
-            <div class="group-card" data-group-id="3">
-                <!-- pizza emoji - casual hangouts ke liye -->
-                <div class="group-icon">🍕</div>
-                <div class="group-info">
-                    <h3 class="group-name">Weekend Squad</h3>
-                    <p class="group-members">5 members</p>
-                </div>
-                <div class="group-balance">
-                    <p class="balance-label">Your balance</p>
-                    <!-- settled = sab clear hai, kuch lena dena nahi (gray) -->
-                    <p class="balance-amount settled">$0</p>
-                </div>
-            </div>
 
-            <!-- Group 4: Office lunch group -->
-            <div class="group-card" data-group-id="4">
-                <!-- burger emoji - food expenses -->
-                <div class="group-icon">🍔</div>
-                <div class="group-info">
-                    <h3 class="group-name">Office Lunch</h3>
-                    <p class="group-members">8 members</p>
-                </div>
-                <div class="group-balance">
-                    <p class="balance-label">Your balance</p>
-                    <p class="balance-amount negative">-$45</p>
-                </div>
-            </div>
-
-            <!-- Group 5: Gym membership -->
-            <div class="group-card" data-group-id="5">
-                <!-- muscle emoji - fitness related -->
-                <div class="group-icon">💪</div>
-                <div class="group-info">
-                    <h3 class="group-name">Gym Buddies</h3>
-                    <p class="group-members">3 members</p>
-                </div>
-                <div class="group-balance">
-                    <p class="balance-label">Your balance</p>
-                    <p class="balance-amount positive">+$60</p>
-                </div>
-            </div>
-
-            <!-- Group 6: Movie plans -->
-            <div class="group-card" data-group-id="6">
-                <!-- movie camera emoji -->
-                <div class="group-icon">🎬</div>
-                <div class="group-info">
-                    <h3 class="group-name">Movie Night</h3>
-                    <p class="group-members">4 members</p>
-                </div>
-                <div class="group-balance">
-                    <p class="balance-label">Your balance</p>
-                    <p class="balance-amount settled">$0</p>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- JS files - functionality ke liye -->
-    <!-- pehle main app.js - dark mode aur basic cheezein -->
     <script src="../static/js/app.js"></script>
-    <!-- phir groups.js - card clicks aur create button -->
     <script src="../static/js/groups.js"></script>
     <script src="../static/js/mobile-menu.js"></script>
-</body>
+  </body>
 </html>

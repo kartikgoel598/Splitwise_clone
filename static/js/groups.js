@@ -4,50 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // console me message - page load hua ye check karne ke liye
     console.log('Groups page loaded! 🏘️');
     
-    // ===== GROUP CARDS PE CLICK FUNCTIONALITY =====
-    // saare group cards select kar liye
-    const groupCards = document.querySelectorAll('.group-card');
     
-    // har ek card pe loop chalaya
-    groupCards.forEach(function(card) {
-        // click event lagaya
-        card.addEventListener('click', function() {
-            // is card ka data-group-id nikala (HTML me set kiya tha)
-            const groupId = this.getAttribute('data-group-id');
-            // group ka naam nikala card se
-            const groupName = this.querySelector('.group-name').textContent;
-            
-            // console me print kiya debugging ke liye
-            console.log(`Group clicked: ${groupName} (ID: ${groupId})`);
-            
-            // abhi ke liye alert dikhaya
-            // baad me ye group detail page pe redirect hoga
-            alert(`Opening ${groupName} group...\n\n(Group detail page coming soon! Kartik backend se connect karega.)`);
-            
-            // future me ye line uncomment karni hai redirect ke liye
-            // window.location.href = `group-detail.html?id=${groupId}`;
-        });
-    });
-    
-    // ===== CREATE GROUP BUTTON KI FUNCTIONALITY =====
-    // create button ko select kiya
-    const createGroupBtn = document.getElementById('createGroupBtn');
-    
-    // agar button exist karta hai to
-    if (createGroupBtn) {
-        // click event add kiya
-        createGroupBtn.addEventListener('click', function() {
-            // console me log kiya
-            console.log('Create Group button clicked');
-            
-            // abhi alert dikha rahe hain
-            // baad me modal ya naya page khulega
-            alert('Create Group feature coming soon! 🚀\n\nFeatures:\n• Group name set kar sakte\n• Members add kar sakte\n• Icon choose kar sakte\n• Description likh sakte');
-            
-            // future me ye function call karenge
-            // openCreateGroupModal();
-        });
-    }
     
     // ===== CARDS PE HOVER ANIMATION =====
     // thoda extra smoothness ke liye
@@ -64,3 +21,84 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
 });
+// ===== CREATE GROUP MODAL LOGIC =====
+
+// Elements
+const createGroupBtn = document.getElementById("createGroupBtn");
+const createGroupModal = document.getElementById("createGroupModal");
+const closeCreateGroupModal = document.getElementById("closeCreateGroupModal");
+const cancelCreateGroup = document.getElementById("cancelCreateGroup");
+const addMemberBtn = document.getElementById("addMemberBtn");
+const memberList = document.getElementById("memberList");
+const groupNameInput = document.getElementById("groupNameInput");
+const groupNameError = document.getElementById("groupNameError");
+const memberEmailInput = document.getElementById("memberEmailInput");
+const memberEmailError = document.getElementById("memberEmailError");
+
+let members = []; // Store email list
+
+// ✅ Open modal
+createGroupBtn.addEventListener("click", () => {
+    createGroupModal.style.display = "flex";
+    groupNameError.textContent = "";
+    memberEmailError.textContent = "";
+});
+
+// ✅ Close modal
+closeCreateGroupModal.addEventListener("click", () => {
+    createGroupModal.style.display = "none";
+});
+cancelCreateGroup.addEventListener("click", () => {
+    createGroupModal.style.display = "none";
+});
+
+// ✅ Add member
+addMemberBtn.addEventListener("click", () => {
+    const email = memberEmailInput.value.trim();
+
+    // Validation
+    if (!email) {
+        memberEmailError.textContent = "Please enter an email.";
+        return;
+    }
+    if (!validateEmail(email)) {
+        memberEmailError.textContent = "Enter a valid email format.";
+        return;
+    }
+    if (members.includes(email)) {
+        memberEmailError.textContent = "This email is already added.";
+        return;
+    }
+
+    // Add to list
+    members.push(email);
+    updateMemberUI();
+    memberEmailInput.value = "";
+    memberEmailError.textContent = "";
+});
+
+// ✅ Render member list
+function updateMemberUI() {
+    memberList.innerHTML = "";
+    members.forEach((email, index) => {
+        const li = document.createElement("li");
+        li.textContent = email;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✖";
+        removeBtn.classList.add("remove-member-btn");
+        removeBtn.onclick = () => {
+            members.splice(index, 1);
+            updateMemberUI();
+        };
+
+        li.appendChild(removeBtn);
+        memberList.appendChild(li);
+    });
+}
+
+// ✅ Email validation
+function validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}

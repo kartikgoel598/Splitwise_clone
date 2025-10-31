@@ -5,7 +5,7 @@ import os
 from blueprints.auth import auth_bp
 from services.login_required import login_required
 from flask_wtf import CSRFProtect
-
+from blueprints.groups import group_bp
 
 
 app = Flask(__name__)
@@ -30,6 +30,7 @@ def landing():
     return render_template('landing.html', current_year=datetime.now().year)
 
 app.register_blueprint(auth_bp )
+app.register_blueprint(group_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

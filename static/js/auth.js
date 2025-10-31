@@ -31,31 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
     
     // ===== SIGNUP FORM SUBMISSION =====
-    const signupForm = document.getElementById('signupForm');
-    
-    if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // form values
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('signupEmail').value;
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const agreeTerms = document.getElementById('agreeTerms').checked;
-            
-            console.log('Signup attempt:', {
-                name: fullName,
-                email: email,
-                phone: phone
-            });
-            
-            // validation checks
-            if (!fullName || !email || !password || !confirmPassword) {
-                alert('Please fill in all required fields! ⚠️');
-                return;
-            }
+   
             
             // password match check
             if (password !== confirmPassword) {
@@ -104,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
-    }
+    
     
     // ===== FORGOT PASSWORD FORM =====
     const forgotPasswordForm = document.getElementById('forgotPasswordForm');
@@ -179,4 +155,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-});

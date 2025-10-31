@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Group - Split Wisely</title>
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create-group.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-responsive.css') }}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">Splitwisely</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('groups.index') }}" class="active">Groups</a></li>
+                <li><a href="#">Friends</a></li>
+                <li><a href="#">Activity</a></li>
+            </ul>
+            <div class="user-profile">
+                <span>Hi, {{ session.get('username', 'User') }}!</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+
+        <!-- Back Button -->
+        <div class="page-header">
+            <a href="{{ url_for('groups.index') }}" class="back-btn">← Back to Groups</a>
+        </div>
+
+        <!-- Create Group Form -->
+        <div class="create-group-container">
+            <div class="form-card">
+                <div class="form-header">
+                    <h1>Create New Group</h1>
+                    <p>Start splitting expenses with your friends</p>
+                </div>
+
+                <form id="createGroupForm" method="POST" 
+                      action="{{ url_for('groups.create_group') }}" 
+                      class="group-form">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Group Name -->
+                    <div class="form-group">
+                        {{ form.group_name.label(class_='form-label') }}
+                        {{ form.group_name(class_='form-input', placeholder='e.g., Flatmates, Road Trip') }}
+                        {% for error in form.group_name.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        {{ form.description.label(class_='form-label') }}
+                        {{ form.description(class_='form-textarea', placeholder="What's this group for? (optional)") }}
+                        {% for error in form.description.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Members -->
+                    <div class="form-group">
+                        <label class="form-label">Add Members (emails)</label>
+                        <div id="membersContainer">
+                            {% for field in form.members %}
+                                <div class="member-input-row">
+                                    {{ field(class_='form-input member-email-input', placeholder='friend@example.com') }}
+                                    <button type="button" class="remove-member-btn">✖</button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button type="button" id="addMemberBtn" class="add-member-btn">+ Add another member</button>
+                        {% for error in form.members.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="form-actions">
+                        <a href="{{ url_for('groups.index') }}" class="btn-cancel">Cancel</a>
+                        {{ form.submit(class_='btn-submit') }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/create-group.js') }}"></script>
+</body>
+</html>

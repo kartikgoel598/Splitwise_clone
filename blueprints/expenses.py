@@ -3,6 +3,7 @@ from services.db import supabase
 from uuid import uuid4
 from datetime import datetime
 from services.login_required import login_required
+from forms.expenses import AddExpenseForm
 
 expenses_bp = Blueprint('expenses',__name__)
 
@@ -21,31 +22,41 @@ def view_expenses(group_id):
 @expenses_bp.route('/groups/<group_id>/add_expenses',methods = ['GET','POST'])
 @login_required
 def add_expenses(group_id):
-    if request.method == 'POST':
+    form = AddExpenseForm()
 
-        try:
-            description = request.form.get('description',"").strip()
-            amount = float(request.form.get('amount',0))
-            paid_by = session['user_id']
-            if not description or amount <= 0:
-                flash('Description and valid amount are required',"error")
-                return redirect(url_for('expenses.add_expenses', group_id=group_id))
-            result = supabase.table('expenses').insert({
-                'id': str(uuid4()),
-                'group_id':group_id,
-                'paid_by': paid_by,
-                'description': description,
-                'amount': amount,
-                'created_at': datetime.utcnow().isoformat()}).execute()
-            if not result.data:
-                flash('Failed to add expense. Please try again.',"error")
-                return redirect(url_for('expenses.add_expenses', group_id=group_id))
-            expense_id = result.data[0]['id']
-            flash('Expense added successfully!',"success")
-            return redirect(url_for('expenses.view_expenses', group_id=group_id))
+    members_res = supabase.table('group_members').select('user_id,users(username)').eq('group_id',group_id).execute()
+    members = members_res.data or []
+    form.paid_by.choices = [(m['user_id'],m['users']['username']) for m in members]
+
+    if form.validate_on_submit():
+        description = form.description.data.strip()
+        amount = float(form.amount.data)
+        paid_by = form.paid_by.data
+        split_type = form.split_type.data
+        uid = session.get('user_id')
+
+        expenses_res = supabase.table('expenses').insert({
+            'id': str(uuid4()),
+            'group_id': group_id,
+            'paid_by': paid_by,
+            'description': description,
+            'amount':amount,
+            'created_at': datetime.utcnow().isoformat()
+        }).execute()
+        expenses = (expenses_res.data or [None])[0]
+
+        if not expenses:
+            flash('Failed to add expense. Please try again.',"error")
+            return redirect(url_for('expenses.add_expenses', group_id=group_id))
         
-        except Exception as e:
-            return f'an error occured : {str(e)}'
+
+        flash('Expense added successfully!', 'success')
+        return redirect(url_for('groups.group_detail', group_id=group_id))
+
+    return render_template('group_detail.html', form=form, group_id=group_id)
+        
+
+    
 @expenses_bp.route('/groups/<group_id>/share',methods=['POST','GET'])
 @login_required
 def share_expenses(group_id):

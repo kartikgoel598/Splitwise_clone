@@ -6,6 +6,8 @@ from blueprints.auth import auth_bp
 from services.login_required import login_required
 from flask_wtf import CSRFProtect
 from blueprints.groups import group_bp
+from blueprints.expenses import expenses_bp
+from blueprints.payments import payments_bp  
 
 
 app = Flask(__name__)
@@ -31,6 +33,8 @@ def landing():
 
 app.register_blueprint(auth_bp )
 app.register_blueprint(group_bp)
+app.register_blueprint(expenses_bp)
+app.register_blueprint(payments_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -4,6 +4,8 @@ from flask import Blueprint,Flask,flash,redirect,render_template,request,session
 from uuid import UUID
 from services.compute_group_balances import compute_group_balances
 from forms.groups import CreateGroupForm
+from forms.expenses import AddExpenseForm
+from forms.settlement import SettlementForm
 
 group_bp = Blueprint('groups',__name__, url_prefix='/groups')
 @group_bp.route('/')
@@ -83,6 +85,9 @@ def group_detail(group_id):
     except Exception:
         abort(404)
     
+    add_expense_form = AddExpenseForm()
+    settle_form = SettlementForm()
+    
     group_info = supabase.table('groups').select('*').eq('id', group_id).limit(1).execute()
     group = (group_info.data or [None])[0]
     if not group:
@@ -94,6 +99,8 @@ def group_detail(group_id):
     if not members:
         flash('No members found for this group', "error")
         return redirect(url_for('groups.index'))
+    add_expense_form.paid_by.choices = [(m['user_id'], m['users']['username']) for m in members]
+    settle_form.pay_to.choices = [(m['user_id'],m['users']['username']) for m in members if m['user_id']!= session.get('user_id')]
 
     
     initial_expenses_list = supabase.table('expenses').select(
@@ -103,7 +110,8 @@ def group_detail(group_id):
 
     balances = compute_group_balances(group_id)
 
-    return render_template("group_detail.html", group=group, members=members, expenses=expenses, balances=balances)
+    return render_template("group_detail.html", group=group, members=members, expenses=expenses, balances=balances,add_expense_form=add_expense_form,
+        settle_form=settle_form)
 
     
 

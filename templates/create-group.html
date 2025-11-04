@@ -4,38 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Group - Split Wisely</title>
-   
+    
     <!-- CSS files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/create-group.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_group.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-responsive.css') }}">
 </head>
 <body>
-   
+    
     <!-- Navbar Component -->
     {% include 'components/navbar.html' %}
- 
+
     <!-- Main Content -->
     <div class="main-container">
-       
+        
         <!-- Back Button -->
         <div class="page-header">
             <a href="{{ url_for('groups.index') }}" class="back-btn">
                 <span>←</span> Back to Groups
             </a>
         </div>
- 
+
         <!-- Create Group Form Container -->
         <div class="create-group-container">
-           
+            
             <div class="form-card">
-               
+                
                 <div class="form-header">
                     <h1>Create New Group</h1>
                     <p>Start splitting expenses with your friends</p>
                 </div>
- 
+
                 <!-- Flask Flash Messages -->
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
@@ -46,11 +46,11 @@
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
- 
+
                 <!-- GROUP CREATION FORM -->
                 <form method="POST" action="{{ url_for('groups.create_group') }}" class="group-form" id="createGroupForm">
                     {{ form.hidden_tag() }}
-                   
+                    
                     <!-- Group Name -->
                     <div class="form-group">
                         {{ form.group_name.label(class='form-label') }}
@@ -61,7 +61,7 @@
                             {% endfor %}
                         {% endif %}
                     </div>
- 
+
                     <!-- Group Description -->
                     <div class="form-group">
                         {{ form.description.label(class='form-label') }}
@@ -73,14 +73,14 @@
                             {% endfor %}
                         {% endif %}
                     </div>
- 
+
                     <!-- Add Members -->
                     <div class="form-group">
                         <label class="form-label">
                             Add Members <span class="required">*</span>
                         </label>
                         <p class="field-hint">Enter email addresses of people you want to add</p>
-                       
+                        
                         <div class="members-input-container" id="membersContainer">
                             {% if form.members %}
                                 {% for member_field in form.members %}
@@ -94,10 +94,10 @@
                             {% else %}
                                 <!-- Default if no members -->
                                 <div class="member-input-row">
-                                    <input
-                                        type="email"
+                                    <input 
+                                        type="email" 
                                         name="members-0"
-                                        class="form-input member-email-input"
+                                        class="form-input member-email-input" 
                                         placeholder="friend@example.com"
                                         required
                                     >
@@ -107,32 +107,32 @@
                                 </div>
                             {% endif %}
                         </div>
-                       
+                        
                         <button type="button" class="add-member-btn" id="addMemberBtn">
                             <span>+</span> Add Another Member
                         </button>
-                       
+                        
                         {% if form.members.errors %}
                             {% for error in form.members.errors %}
                                 <span class="error-message show">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
                     </div>
- 
+
                     <!-- Form Actions -->
                     <div class="form-actions">
                         <a href="{{ url_for('groups.index') }}" class="btn-cancel">Cancel</a>
                         {{ form.submit(class='btn-submit') }}
                     </div>
- 
+
                 </form>
- 
+
             </div>
- 
+
         </div>
- 
+
     </div>
- 
+
     <!-- Success/Error Messages Modal -->
     <div class="message-modal" id="messageModal" style="display: none;">
         <div class="message-content">
@@ -142,10 +142,10 @@
             <button id="messageOkBtn" class="message-ok-btn">OK</button>
         </div>
     </div>
- 
+
     <!-- Footer Component -->
     {% include 'components/footer.html' %}
- 
+
     <!-- JavaScript files -->
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/create-group.js') }}"></script>

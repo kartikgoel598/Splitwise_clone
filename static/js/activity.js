@@ -101,18 +101,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ===== EXPORT BUTTON FUNCTIONALITY =====
-    if (exportBtn) {
-        exportBtn.addEventListener('click', function() {
-            console.log('Export button clicked');
+    // // ===== EXPORT BUTTON FUNCTIONALITY =====
+    // if (exportBtn) {
+    //     exportBtn.addEventListener('click', function() {
+    //         console.log('Export button clicked');
             
-            // future me CSV/PDF export functionality
-            alert('Export feature coming soon! 📥\n\nYou will be able to export:\n• CSV format\n• PDF report\n• Excel spreadsheet\n• Date range selection');
+    //         // future me CSV/PDF export functionality
+    //         alert('Export feature coming soon! 📥\n\nYou will be able to export:\n• CSV format\n• PDF report\n• Excel spreadsheet\n• Date range selection');
             
-            // future implementation
-            // exportTransactions('csv');
-        });
-    }
+    //         // future implementation
+    //         // exportTransactions('csv');
+    //     });
+    // }
     
     // ===== CALCULATE STATISTICS =====
     // optional - page load pe statistics calculate kar sakte hain

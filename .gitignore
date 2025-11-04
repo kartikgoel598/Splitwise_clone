@@ -1,2 +1,79 @@
-#ignore env file 
-.env
+# ----------------------------
+# Python / Flask build files
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pyc
+ 
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+ 
+# Supabase / API Keys or Secrets
+*.env
+.env.local
+.env.prod
+.env.development
+.env.test
+ 
+# SQLite / Local databases
+*.db
+*.sqlite3
+instance/
+migrations/
+ 
+# Logs and temporary files
+*.log
+*.pot
+*.mo
+*.pid
+*.seed
+*.bak
+*.swp
+*.tmp
+*.temp
+ 
+# Cache and compiled code
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+__pypackages__/
+ 
+# Static / build artifacts (if generated)
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+ 
+# VS Code / Editor-specific
+.vscode/
+.idea/
+*.code-workspace
+ 
+# System files
+.DS_Store
+Thumbs.db
+ 
+# Node.js frontend (if you have any React/Vite frontend folder)
+node_modules/
+npm-debug.log
+yarn-error.log
+*.tsbuildinfo
+ 
+# Backups / archives
+*.zip
+*.tar
+*.gz
+*.rar
+ 
+# Supabase generated files (optional safety)
+supabase/.temp/
+supabase/.cache/

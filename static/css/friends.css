@@ -280,3 +280,438 @@ body.dark-mode .settle-btn.disabled {
         text-align: left;
     }
 }
+/* ===== MODAL STYLING ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideUp 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #718096;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    background: #f1f5f9;
+    color: #2d3748;
+    transform: rotate(90deg);
+}
+
+/* Modal Form */
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d3748;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.required {
+    color: #ff6b6b;
+}
+
+.optional {
+    color: #a0aec0;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 13px;
+}
+
+.form-input,
+.form-textarea {
+    padding: 14px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #2d3748;
+    background: #f7fafc;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #1cc29f;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(28, 194, 159, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn-cancel,
+.btn-submit {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel {
+    background: #f7fafc;
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+}
+
+.btn-cancel:hover {
+    background: #edf2f7;
+    border-color: #cbd5e0;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #1cc29f, #17a085);
+    color: white;
+    box-shadow: 0 4px 15px rgba(28, 194, 159, 0.3);
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(28, 194, 159, 0.4);
+}
+
+/* Dark Mode Modal */
+body.dark-mode .modal-content {
+    background: #2d3748;
+}
+
+body.dark-mode .modal-header {
+    border-bottom-color: #4a5568;
+}
+
+body.dark-mode .modal-header h2 {
+    color: #e2e8f0;
+}
+
+body.dark-mode .close-modal {
+    color: #a0aec0;
+}
+
+body.dark-mode .close-modal:hover {
+    background: #374151;
+    color: #e2e8f0;
+}
+
+body.dark-mode .form-label {
+    color: #e2e8f0;
+}
+
+body.dark-mode .form-input,
+body.dark-mode .form-textarea {
+    background: #1a202c;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .form-input:focus,
+body.dark-mode .form-textarea:focus {
+    background: #1a202c;
+}
+
+body.dark-mode .btn-cancel {
+    background: #374151;
+    color: #e2e8f0;
+    border-color: #4a5568;
+}
+
+body.dark-mode .btn-cancel:hover {
+    background: #4a5568;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+}
+/* ===== REMIND BUTTON ===== */
+.remind-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+}
+
+.remind-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 87, 108, 0.4);
+}
+
+/* ===== AMOUNT INPUT WITH $ SYMBOL ===== */
+.amount-input-group {
+    position: relative;
+}
+
+.amount-input-group .dollar-sign {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    font-weight: 700;
+    color: #1cc29f;
+    z-index: 1;
+}
+
+.amount-input-group .amount-input {
+    padding-left: 40px;
+}
+
+/* ===== PAYMENT METHODS ===== */
+.payment-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.payment-option {
+    cursor: pointer;
+}
+
+.payment-option input[type="radio"] {
+    display: none;
+}
+
+.payment-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: #f7fafc;
+}
+
+.payment-card:hover {
+    border-color: #1cc29f;
+    background: #e6fffa;
+    transform: translateY(-3px);
+}
+
+.payment-option input[type="radio"]:checked + .payment-card {
+    border-color: #1cc29f;
+    background: #e6fffa;
+    box-shadow: 0 4px 12px rgba(28, 194, 159, 0.3);
+}
+
+.payment-icon {
+    font-size: 36px;
+}
+
+.payment-name {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+/* ===== REMINDER PLACEHOLDER ===== */
+.reminder-placeholder {
+    background: rgba(28, 194, 159, 0.1);
+    border: 2px dashed #cbd5e0;
+    border-radius: 10px;
+    padding: 15px;
+    color: #4a5568;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.reminder-placeholder strong {
+    color: #1cc29f;
+}
+
+/* ===== PAPER PLANE ANIMATION ===== */
+.plane-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    animation: flyAway 2s ease-out forwards;
+    z-index: 10000;
+    display: none;
+    filter: drop-shadow(0 10px 20px rgba(28, 194, 159, 0.5));
+}
+
+@keyframes flyAway {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(0%, -80%) rotate(25deg) scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(150%, -150%) rotate(45deg) scale(2);
+    }
+}
+
+/* ===== SUCCESS MESSAGE ===== */
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #1cc29f, #17a085);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(28, 194, 159, 0.4);
+    animation: slideInRight 0.5s ease;
+    z-index: 10001;
+    display: none;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ===== DARK MODE ===== */
+body.dark-mode .remind-btn {
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.5);
+}
+
+body.dark-mode .payment-card {
+    background: #1a202c;
+    border-color: #4a5568;
+}
+
+body.dark-mode .payment-card:hover,
+body.dark-mode .payment-option input[type="radio"]:checked + .payment-card {
+    background: #2d3748;
+}
+
+body.dark-mode .payment-name {
+    color: #e2e8f0;
+}
+
+body.dark-mode .reminder-placeholder {
+    background: rgba(28, 194, 159, 0.15);
+    border-color: #4a5568;
+    color: #cbd5e0;
+}
+
+body.dark-mode .reminder-placeholder strong {
+    color: #1cc29f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .payment-methods {
+        grid-template-columns: 1fr;
+    }
+
+    .plane-animation {
+        font-size: 70px;
+    }
+
+    .success-message {
+        right: 10px;
+        left: 10px;
+        text-align: center;
+    }
+}

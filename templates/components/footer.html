@@ -1,0 +1,40 @@
+<!-- templates/components/footer.html -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <!-- Left section - Branding -->
+            <div class="footer-brand">
+                <h3 class="footer-logo">Splitwisely</h3>
+                <p class="footer-tagline">Split expenses, not friendships! ✨</p>
+            </div>
+
+            <!-- Middle section - Quick Links -->
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+               <ul class="nav-links">
+            <li><a href="{{ url_for('dashboard') }}" {% if request.endpoint == 'dashboard' %}class="active"{% endif %}>Dashboard</a></li>
+            <li><a href="{{ url_for('groups.index') }}" {% if request.endpoint == 'groups.index' %}class="active"{% endif %}>Groups</a></li>
+            <li><a href="{{ url_for('friends') }}" {% if request.endpoint == 'friends' %}class="active"{% endif %}>Friends</a></li>
+            <li><a href="{{ url_for('activity') }}" {% if request.endpoint == 'activity' %}class="active"{% endif %}>Activity</a></li>
+        </ul>
+            </div>
+
+            <!-- Right section - Social/Info -->
+            <div class="footer-info">
+                <h4>About</h4>
+                <p>Made by Praada & Son</p>
+                <!-- <div class="footer-social">
+                    <a href="#" title="GitHub"></a> 
+                    <a href="#" title="Twitter"></a>
+                    <a href="#" title="LinkedIn"></a>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Bottom copyright -->
+        <div class="footer-bottom">
+            <!-- <p>&copy; {{ current_year }} Splitwisely. All rights reserved.</p> baad me ye daal denge -->
+              <p> Splitwisely. By PRAADA & Son.</p>
+        </div>
+    </div>
+</footer>

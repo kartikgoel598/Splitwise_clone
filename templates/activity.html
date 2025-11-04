@@ -1,126 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activity - Split Wisely</title>
-    <link rel="stylesheet" href="../static/css/page-transitions.css">
-    <!-- main dashboard CSS -->
-    <link rel="stylesheet" href="../static/css/style.css">
-    <!-- activity page ki apni CSS -->
-    <link rel="stylesheet" href="../static/css/activity.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/activity.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
 </head>
 <body>
     
-    <!-- top navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <!-- logo left me -->
-            <h1 class="logo">Splitwisely</h1>
-            
-            <!-- navigation menu -->
-            <ul class="nav-links">
-                <li><a href="index.html">Dashboard</a></li>
-                <li><a href="groups.html">Groups</a></li>
-                <li><a href="friends.html">Friends</a></li>
-                <li><a href="activity.html" class="active">Activity</a></li>
-            </ul>
-            
-            <!-- user greeting -->
-            <div class="user-profile">
-                <span>Hi, PRAADA!</span>
-            </div>
-            
-            <!-- dark mode toggle -->
-            <div class="theme-toggle">
-                <input type="checkbox" id="themeToggle" class="toggle-checkbox">
-                <label for="themeToggle" class="toggle-label">
-                    <span class="toggle-ball">
-                        <!-- sun icon -->
-                        <svg class="icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                        <!-- moon icon -->
-                        <svg class="icon moon-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </span>
-                </label>
-            </div>
-        </div>
-    </nav>
+    {% include 'components/navbar.html' %}
 
-    <!-- main content -->
     <div class="main-container">
         
-        <!-- page header -->
         <div class="page-header">
             <h1 class="page-title">Activity History</h1>
-            <!-- export button - future feature -->
-            <button class="export-btn" id="exportBtn">
+            <!-- Export button - Modal trigger -->
+            <button class="export-btn" id="openExportModal">
                 <span class="btn-icon">📥</span>
                 Export
             </button>
         </div>
 
-        <!-- filters section - search aur filter options -->
+        <!-- Filters Section -->
         <div class="filters-section">
-            <!-- search box -->
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Search transactions..." class="search-input">
                 <span class="search-icon">🔍</span>
             </div>
             
-            <!-- filter buttons -->
             <div class="filter-buttons">
-                <!-- sab transactions dikhayen - default active -->
                 <button class="filter-btn active" data-filter="all">All</button>
-                <!-- sirf mujhe dena hai wale -->
                 <button class="filter-btn" data-filter="owe">You Owe</button>
-                <!-- sirf mujhe milna hai wale -->
                 <button class="filter-btn" data-filter="owed">You Are Owed</button>
-                <!-- sirf settled transactions -->
                 <button class="filter-btn" data-filter="settled">Settled</button>
             </div>
         </div>
 
-        <!-- activity timeline - sab transactions chronologically -->
+        <!-- Activity Timeline -->
         <div class="activity-timeline">
             
-            <!-- Transaction 1: Recent - dinner expense -->
             <div class="activity-item" data-type="owe">
-                <!-- left side - icon aur line -->
                 <div class="activity-icon owe-icon">
-                    <!-- emoji icon expense type ke according -->
                     <span class="icon-emoji">🍽️</span>
                 </div>
-                
-                <!-- right side - transaction details -->
                 <div class="activity-content">
                     <div class="activity-header">
-                        <!-- transaction title -->
                         <h3 class="activity-title">Dinner at Restaurant</h3>
-                        <!-- amount - red kyunki owe hai -->
                         <p class="activity-amount owe">-$50</p>
                     </div>
                     <div class="activity-details">
-                        <!-- kis group/friend ke saath -->
                         <p class="activity-group">with Flatmates group</p>
-                        <!-- paid by kaun -->
                         <p class="activity-paidby">Paid by Kartik</p>
                     </div>
-                    <!-- date aur time -->
                     <p class="activity-date">Oct 18, 2025 • 7:30 PM</p>
                 </div>
             </div>
 
-            <!-- Transaction 2: Payment received -->
             <div class="activity-item" data-type="owed">
                 <div class="activity-icon owed-icon">
                     <span class="icon-emoji">💸</span>
@@ -128,7 +67,6 @@
                 <div class="activity-content">
                     <div class="activity-header">
                         <h3 class="activity-title">Payment Received</h3>
-                        <!-- green amount - mujhe mila -->
                         <p class="activity-amount owed">+$300</p>
                     </div>
                     <div class="activity-details">
@@ -139,7 +77,6 @@
                 </div>
             </div>
 
-            <!-- Transaction 3: Grocery shopping -->
             <div class="activity-item" data-type="owe">
                 <div class="activity-icon owe-icon">
                     <span class="icon-emoji">🛒</span>
@@ -157,7 +94,6 @@
                 </div>
             </div>
 
-            <!-- Transaction 4: Settled up -->
             <div class="activity-item" data-type="settled">
                 <div class="activity-icon settled-icon">
                     <span class="icon-emoji">✅</span>
@@ -165,7 +101,6 @@
                 <div class="activity-content">
                     <div class="activity-header">
                         <h3 class="activity-title">Settled Up</h3>
-                        <!-- gray - settled transaction -->
                         <p class="activity-amount settled">$0</p>
                     </div>
                     <div class="activity-details">
@@ -176,7 +111,6 @@
                 </div>
             </div>
 
-            <!-- Transaction 5: Cab fare -->
             <div class="activity-item" data-type="owed">
                 <div class="activity-icon owed-icon">
                     <span class="icon-emoji">🚖</span>
@@ -194,7 +128,6 @@
                 </div>
             </div>
 
-            <!-- Transaction 6: Coffee -->
             <div class="activity-item" data-type="owe">
                 <div class="activity-icon owe-icon">
                     <span class="icon-emoji">☕</span>
@@ -212,7 +145,6 @@
                 </div>
             </div>
 
-            <!-- Transaction 7: Movie tickets -->
             <div class="activity-item" data-type="owe">
                 <div class="activity-icon owe-icon">
                     <span class="icon-emoji">🎬</span>
@@ -230,7 +162,6 @@
                 </div>
             </div>
 
-            <!-- Transaction 8: Gym membership -->
             <div class="activity-item" data-type="owed">
                 <div class="activity-icon owed-icon">
                     <span class="icon-emoji">💪</span>
@@ -250,7 +181,6 @@
 
         </div>
 
-        <!-- no results message - initially hidden -->
         <div class="no-results" id="noResults" style="display: none;">
             <p>No transactions found 🔍</p>
             <p class="no-results-sub">Try adjusting your search or filters</p>
@@ -258,9 +188,91 @@
 
     </div>
 
-    <!-- JavaScript files -->
-    <script src="../static/js/app.js"></script>
-    <script src="../static/js/activity.js"></script>
-    <script src="../static/js/mobile-menu.js"></script>
+    <!-- EXPORT MODAL -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📥 Export Activity</h2>
+                <button class="close-modal" id="closeExportModal">&times;</button>
+            </div>
+
+            <form class="modal-form" id="exportForm">
+                <!-- Export Format Selection -->
+                <div class="form-group">
+                    <label class="form-label">Export Format <span class="required">*</span></label>
+                    <div class="export-format-options">
+                        <label class="format-option">
+                            <input type="radio" name="format" value="pdf" checked>
+                            <div class="format-card">
+                                <span class="format-icon">📄</span>
+                                <span class="format-name">PDF</span>
+                            </div>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="csv">
+                            <div class="format-card">
+                                <span class="format-icon">📊</span>
+                                <span class="format-name">CSV</span>
+                            </div>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="excel">
+                            <div class="format-card">
+                                <span class="format-icon">📗</span>
+                                <span class="format-name">Excel</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Date Range -->
+                <div class="form-group">
+                    <label class="form-label">Date Range <span class="optional">(optional)</span></label>
+                    <div class="date-range-group">
+                        <input type="date" class="form-input" id="startDate" placeholder="Start Date">
+                        <span class="date-separator">to</span>
+                        <input type="date" class="form-input" id="endDate" placeholder="End Date">
+                    </div>
+                </div>
+
+                <!-- Filter Options -->
+                <div class="form-group">
+                    <label class="form-label">Include Transactions</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="include" value="owe" checked>
+                            <span>You Owe</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="include" value="owed" checked>
+                            <span>You Are Owed</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="include" value="settled" checked>
+                            <span>Settled</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Email Option -->
+                <div class="form-group">
+                    <label class="checkbox-option email-option">
+                        <input type="checkbox" name="emailExport" id="emailExport">
+                        <span>📧 Email me the export</span>
+                    </label>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelExport">Cancel</button>
+                    <button type="submit" class="btn-submit">📥 Download Export</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% include 'components/footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/activity.js') }}"></script>
 </body>
 </html>

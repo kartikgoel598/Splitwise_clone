@@ -1,11 +1,6 @@
-/* ===== CREATE GROUP PAGE STYLING (DARK MODE FIX) ===== */
+/* ===== CREATE GROUP PAGE STYLING ===== */
 
-/* Main container background fix */
-.main-container {
-    padding: 20px;
-}
-
-/* back button */
+/* Back button */
 .back-btn {
     display: inline-flex;
     align-items: center;
@@ -30,13 +25,13 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* create group container */
+/* Create group container */
 .create-group-container {
     max-width: 650px;
     margin: 30px auto;
 }
 
-/* form card */
+/* Form card */
 .form-card {
     background: white;
     padding: 45px;
@@ -44,7 +39,7 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* form header */
+/* Form header */
 .form-header {
     text-align: center;
     margin-bottom: 40px;
@@ -55,12 +50,62 @@
     font-weight: 700;
     color: #2d3748;
     margin: 0 0 12px 0;
+    background: linear-gradient(135deg, #1cc29f, #17a085);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .form-header p {
     font-size: 16px;
     color: #718096;
     margin: 0;
+}
+
+/* ===== FLASH MESSAGES / ALERTS ===== */
+.alert {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    font-size: 15px;
+    font-weight: 500;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+}
+
+.alert-error,
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+}
+
+.alert-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 2px solid #ffeaa7;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 2px solid #bee5eb;
 }
 
 /* ===== FORM STYLING ===== */
@@ -71,14 +116,14 @@
     gap: 28px;
 }
 
-/* form group */
+/* Form group */
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-/* form label */
+/* Form label */
 .form-label {
     font-size: 14px;
     font-weight: 700;
@@ -90,13 +135,13 @@
     gap: 5px;
 }
 
-/* required indicator */
+/* Required indicator */
 .required {
     color: #ff6b6b;
     font-size: 16px;
 }
 
-/* optional indicator */
+/* Optional indicator */
 .optional {
     color: #a0aec0;
     font-weight: 400;
@@ -105,7 +150,7 @@
     margin-left: 5px;
 }
 
-/* form input */
+/* Form input */
 .form-input {
     padding: 15px 18px;
     border: 2px solid #e2e8f0;
@@ -122,13 +167,14 @@
     border-color: #1cc29f;
     background: white;
     box-shadow: 0 0 0 4px rgba(28, 194, 159, 0.1);
+    transform: translateY(-1px);
 }
 
 .form-input::placeholder {
     color: #a0aec0;
 }
 
-/* textarea */
+/* Textarea */
 .form-textarea {
     padding: 15px 18px;
     border: 2px solid #e2e8f0;
@@ -148,13 +194,14 @@
     border-color: #1cc29f;
     background: white;
     box-shadow: 0 0 0 4px rgba(28, 194, 159, 0.1);
+    transform: translateY(-1px);
 }
 
 .form-textarea::placeholder {
     color: #a0aec0;
 }
 
-/* character count */
+/* Character count */
 .char-count {
     font-size: 12px;
     color: #a0aec0;
@@ -162,7 +209,7 @@
     margin-top: -5px;
 }
 
-/* field hint */
+/* Field hint */
 .field-hint {
     font-size: 13px;
     color: #718096;
@@ -178,18 +225,30 @@
     margin-bottom: 15px;
 }
 
-/* member input row */
+/* Member input row */
 .member-input-row {
     display: flex;
     gap: 10px;
     align-items: center;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .member-email-input {
     flex: 1;
 }
 
-/* remove member button - BIN ICON */
+/* Remove member button - BIN ICON */
 .remove-member-btn {
     width: 48px;
     height: 48px;
@@ -223,7 +282,7 @@
     box-shadow: none;
 }
 
-/* add member button */
+/* Add member button */
 .add-member-btn {
     display: inline-flex;
     align-items: center;
@@ -237,6 +296,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .add-member-btn:hover {
@@ -245,6 +305,7 @@
     border-style: solid;
     color: #1cc29f;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(28, 194, 159, 0.2);
 }
 
 .add-member-btn span {
@@ -257,10 +318,21 @@
     font-size: 13px;
     color: #ff6b6b;
     margin-top: 5px;
+    display: none;
+    animation: shake 0.3s ease;
+}
+
+.error-message.show {
     display: block;
 }
 
-/* input with error */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Input with error */
 .form-input.error,
 .form-textarea.error {
     border-color: #ff6b6b;
@@ -299,6 +371,7 @@
     background: #f7fafc;
     border-color: #cbd5e0;
     transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .btn-submit {
@@ -317,7 +390,99 @@
     transform: translateY(0);
 }
 
-/* ===== DARK MODE STYLING ===== */
+/* Loading state */
+.btn-submit:disabled {
+    background: #a0aec0;
+    cursor: wait;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* ===== SUCCESS/ERROR MESSAGE MODAL ===== */
+.message-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.message-content {
+    background: white;
+    padding: 45px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalBounce 0.5s ease;
+}
+
+@keyframes modalBounce {
+    0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(-50px);
+    }
+    50% {
+        transform: scale(1.05) translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.message-icon {
+    font-size: 70px;
+    margin-bottom: 20px;
+    animation: iconPop 0.6s ease 0.2s;
+}
+
+@keyframes iconPop {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.message-content h3 {
+    font-size: 26px;
+    color: #2d3748;
+    margin: 0 0 15px 0;
+    font-weight: 700;
+}
+
+.message-content p {
+    font-size: 16px;
+    color: #718096;
+    margin: 0 0 30px 0;
+    line-height: 1.5;
+}
+
+.message-ok-btn {
+    padding: 14px 50px;
+    background: linear-gradient(135deg, #1cc29f, #17a085);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(28, 194, 159, 0.3);
+}
+
+.message-ok-btn:hover {
+    background: linear-gradient(135deg, #17a085, #149174);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(28, 194, 159, 0.4);
+}
+
+/* ===== DARK MODE ===== */
 
 body.dark-mode .back-btn {
     background: #374151;
@@ -402,6 +567,39 @@ body.dark-mode .remove-member-btn:disabled {
     color: #718096;
 }
 
+body.dark-mode .message-content {
+    background: #2d3748;
+}
+
+body.dark-mode .message-content h3 {
+    color: #e2e8f0;
+}
+
+body.dark-mode .alert-success {
+    background: #1e4620;
+    color: #d4edda;
+    border-color: #2d5a2e;
+}
+
+body.dark-mode .alert-error,
+body.dark-mode .alert-danger {
+    background: #4a1e1e;
+    color: #f8d7da;
+    border-color: #5e2626;
+}
+
+body.dark-mode .alert-warning {
+    background: #4a3f1e;
+    color: #fff3cd;
+    border-color: #5e512e;
+}
+
+body.dark-mode .alert-info {
+    background: #1e3a4a;
+    color: #d1ecf1;
+    border-color: #2e4e5e;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .form-card {
@@ -423,5 +621,10 @@ body.dark-mode .remove-member-btn:disabled {
     .remove-member-btn {
         width: 100%;
         height: 45px;
+    }
+
+    .message-content {
+        padding: 35px 25px;
+        max-width: 90%;
     }
 }

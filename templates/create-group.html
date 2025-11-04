@@ -3,184 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ group.name }} - Split Wisely</title>
- 
+    <title>Create Group - Split Wisely</title>
+   
+    <!-- CSS files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/groups.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/group-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create-group.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-responsive.css') }}">
 </head>
 <body>
- 
+   
     <!-- Navbar Component -->
     {% include 'components/navbar.html' %}
  
+    <!-- Main Content -->
     <div class="main-container">
- 
-        <!-- Header -->
+       
+        <!-- Back Button -->
         <div class="page-header">
-            <a href="{{ url_for('groups.index') }}" class="back-btn">← Back to Groups</a>
-            <h1 class="page-title">{{ group.name }}</h1>
-            <p class="page-subtitle">{{ group.description or "Group details" }}</p>
-            <button id="openAddExpense" class="create-group-btn">
-                + Add Expense
-            </button>
+            <a href="{{ url_for('groups.index') }}" class="back-btn">
+                <span>←</span> Back to Groups
+            </a>
         </div>
  
-        <!-- Group Summary -->
-        <div class="group-summary">
-            <h2 class="section-title">Group Members</h2>
-            <ul class="member-list">
-                {% for m in members %}
-                    <li class="member-item">
-                        <span class="member-name">{{ m['users']['username'] }}</span>
-                        <span class="member-role">({{ m['role'] }})</span>
-                    </li>
-                {% endfor %}
-            </ul>
- 
-            <div class="action-buttons">
-                <button id="openAddExpense2" class="create-group-btn">+ Add Expense</button>
-                <button class="settle-btn">Settle Up</button>
-            </div>
-        </div>
- 
-        <hr class="divider">
- 
-        <!-- Expenses Section -->
-        <div class="expenses-section">
-            <h2 class="section-title">Group Expenses</h2>
+        <!-- Create Group Form Container -->
+        <div class="create-group-container">
            
-            {% if expenses %}
-                <div class="expenses-list">
-                    {% for e in expenses %}
-                        <div class="expense-card">
-                            <div class="expense-info">
-                                <h3 class="expense-title">{{ e.description }}</h3>
-                                <p class="expense-meta">
-                                    Added by <strong>{{ e.users.username }}</strong> •
-                                    {{ e.created_at[:10] }}
-                                </p>
+            <div class="form-card">
+               
+                <div class="form-header">
+                    <h1>Create New Group</h1>
+                    <p>Start splitting expenses with your friends</p>
+                </div>
+ 
+                <!-- Flask Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
                             </div>
-                            <div class="expense-amount">
-                                ${{ "%.2f"|format(e.amount) }}
-                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+ 
+                <!-- GROUP CREATION FORM -->
+                <form method="POST" action="{{ url_for('groups.create_group') }}" class="group-form" id="createGroupForm">
+                    {{ form.hidden_tag() }}
+                   
+                    <!-- Group Name -->
+                    <div class="form-group">
+                        {{ form.group_name.label(class='form-label') }}
+                        {{ form.group_name(class='form-input', placeholder='e.g., Weekend Squad, Trip to Bali') }}
+                        {% if form.group_name.errors %}
+                            {% for error in form.group_name.errors %}
+                                <span class="error-message show">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+ 
+                    <!-- Group Description -->
+                    <div class="form-group">
+                        {{ form.description.label(class='form-label') }}
+                        {{ form.description(class='form-textarea', placeholder="What's this group for?", id='description', maxlength='200') }}
+                        <span class="char-count"><span id="charCount">0</span>/200</span>
+                        {% if form.description.errors %}
+                            {% for error in form.description.errors %}
+                                <span class="error-message show">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+ 
+                    <!-- Add Members -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Add Members <span class="required">*</span>
+                        </label>
+                        <p class="field-hint">Enter email addresses of people you want to add</p>
+                       
+                        <div class="members-input-container" id="membersContainer">
+                            {% if form.members %}
+                                {% for member_field in form.members %}
+                                    <div class="member-input-row">
+                                        {{ member_field(class='form-input member-email-input', placeholder='friend@example.com') }}
+                                        <button type="button" class="remove-member-btn" {% if loop.first and loop.length == 1 %}disabled{% endif %}>
+                                            🗑️
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <!-- Default if no members -->
+                                <div class="member-input-row">
+                                    <input
+                                        type="email"
+                                        name="members-0"
+                                        class="form-input member-email-input"
+                                        placeholder="friend@example.com"
+                                        required
+                                    >
+                                    <button type="button" class="remove-member-btn" disabled>
+                                        🗑️
+                                    </button>
+                                </div>
+                            {% endif %}
                         </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p class="empty-message">No expenses yet. Add one to get started 💸</p>
-            {% endif %}
-        </div>
+                       
+                        <button type="button" class="add-member-btn" id="addMemberBtn">
+                            <span>+</span> Add Another Member
+                        </button>
+                       
+                        {% if form.members.errors %}
+                            {% for error in form.members.errors %}
+                                <span class="error-message show">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
  
-        <hr class="divider">
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <a href="{{ url_for('groups.index') }}" class="btn-cancel">Cancel</a>
+                        {{ form.submit(class='btn-submit') }}
+                    </div>
  
-        <!-- Balances -->
-        <div class="balances-section">
-            <h2 class="section-title">Balances</h2>
-            {% if balances %}
-                <ul class="balance-list">
-                    {% for b in balances %}
-                        <li class="balance-item">
-                            <span class="balance-user">User {{ b.username }}</span>
-                            <span class="balance-amount {% if b.net > 0 %}positive{% elif b.net < 0 %}negative{% else %}settled{% endif %}">
-                                ${{ "%.2f"|format(b.net) }}
-                            </span>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p class="empty-message">No balances yet.</p>
-            {% endif %}
-        </div>
-    </div>
+                </form>
  
-    <!-- Add Expense Modal -->
-    <div class="modal-overlay" id="addExpenseModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Add Expense</h2>
-                <button class="close-modal" id="closeAddExpense">&times;</button>
             </div>
  
-            <form method="POST" action="{{ url_for('expenses.add_expenses', group_id=group.id) }}" class="modal-form">
-                {{ add_expense_form.hidden_tag() }}
+        </div>
  
-                <div class="form-group">
-                    {{ add_expense_form.description.label(class="form-label") }}
-                    {{ add_expense_form.description(class="form-input", placeholder="Dinner at restaurant") }}
-                    {% for e in add_expense_form.description.errors %}
-                        <small class="error-message">{{ e }}</small>
-                    {% endfor %}
-                </div>
+    </div>
  
-                <div class="form-group">
-                    {{ add_expense_form.amount.label(class="form-label") }}
-                    {{ add_expense_form.amount(class="form-input", placeholder="0.00") }}
-                    {% for e in add_expense_form.amount.errors %}
-                        <small class="error-message">{{ e }}</small>
-                    {% endfor %}
-                </div>
- 
-                <div class="form-group">
-                    {{ add_expense_form.paid_by.label(class="form-label") }}
-                    {{ add_expense_form.paid_by(class="form-input") }}
-                </div>
- 
-                <div class="form-group">
-                    {{ add_expense_form.split_type.label(class="form-label") }}
-                    {{ add_expense_form.split_type(class="form-radio") }}
-                </div>
- 
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" id="cancelAddExpense">Cancel</button>
-                    {{ add_expense_form.submit(class="btn-submit") }}
-                </div>
-            </form>
+    <!-- Success/Error Messages Modal -->
+    <div class="message-modal" id="messageModal" style="display: none;">
+        <div class="message-content">
+            <span class="message-icon" id="messageIcon">✅</span>
+            <h3 id="messageTitle">Success!</h3>
+            <p id="messageText">Group created successfully!</p>
+            <button id="messageOkBtn" class="message-ok-btn">OK</button>
         </div>
     </div>
  
-    <!-- Settle Up Modal -->
-    <div class="modal-overlay" id="settleUpModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Settle Up</h2>
-                <button class="close-modal" id="closeSettleUp">&times;</button>
-            </div>
- 
-            <form method="POST" action="{{ url_for('payments.settle_up', group_id=group.id) }}" class="modal-form">
-                {{ settle_form.hidden_tag() }}
- 
-                <div class="form-group">
-                    {{ settle_form.pay_to.label(class="form-label") }}
-                    {{ settle_form.pay_to(class="form-input") }}
-                    {% for e in settle_form.pay_to.errors %}
-                        <small class="error-message">{{ e }}</small>
-                    {% endfor %}
-                </div>
- 
-                <div class="form-group">
-                    {{ settle_form.amount.label(class="form-label") }}
-                    {{ settle_form.amount(class="form-input", placeholder="Enter amount") }}
-                    {% for e in settle_form.amount.errors %}
-                        <small class="error-message">{{ e }}</small>
-                    {% endfor %}
-                </div>
- 
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" id="cancelSettleUp">Cancel</button>
-                    {{ settle_form.submit(class="btn-submit") }}
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Footer Component -->
     {% include 'components/footer.html' %}
  
-    <!-- JavaScript -->
+    <!-- JavaScript files -->
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/group-detail.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/create-group.js') }}"></script>
 </body>
 </html>

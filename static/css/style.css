@@ -19,6 +19,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: background-color 0.3s ease;
 }
 
 .nav-container {
@@ -30,89 +31,127 @@ body {
     align-items: center;
 }
 
-/* LOGO STYLING - Yaha tumhara logo chhota hoga */
-.logo img {
-    height: 150px;
-    width: auto;
+/* ===== LOGO STYLING ===== */
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
 }
 
+/* Light mode - BLACK logo */
+body:not(.dark-mode) .logo {
+    background: linear-gradient(135deg, #000000, #1a202c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Dark mode - WHITE logo */
+body.dark-mode .logo {
+    background: linear-gradient(135deg, #ffffff, #e2e8f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* ===== NAV LINKS ===== */
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 0; /* gap hata di - fixed width use karenge */
+    gap: 0;
 }
 
-/* har nav item ko fixed width diya - alignment ke liye */
 .nav-links li {
-    width: 120px; /* sab items same width */
-    text-align: center; /* text center me */
+    width: 120px;
+    text-align: center;
 }
 
 .nav-links a {
-    display: block; /* full width clickable */
-    padding: 8px 0; /* consistent padding */
-    color: white;
+    display: block;
+    padding: 10px 0;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
     transition: all 0.3s ease;
     position: relative;
 }
 
-/* hover effect - underline animation */
-.nav-links a::after {
+/* Light mode - BLACK text */
+body:not(.dark-mode) .nav-links a {
+    color: #000000;
+}
+
+/* Dark mode - WHITE text */  
+body.dark-mode .nav-links a {
+    color: #e2e8f0;
+}
+
+.nav-links a:hover {
+    opacity: 0.7;
+}
+
+/* ===== UNDERLINE ANIMATION (LIGHT MODE) ===== */
+body:not(.dark-mode) .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 3px;
-    background: white;
+    background: #000000;
     transition: width 0.3s ease;
 }
 
-.nav-links a:hover::after,
-.nav-links a.active::after {
-    width: 80%; /* underline width */
+body:not(.dark-mode) .nav-links a:hover::after,
+body:not(.dark-mode) .nav-links a.active::after {
+    width: 70%;
 }
 
-.nav-links a:hover {
-    opacity: 1;
+/* ===== UNDERLINE ANIMATION (DARK MODE) ===== */
+body.dark-mode .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: #ffffff;
+    transition: width 0.3s ease;
 }
 
-.nav-links a {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 16px;
-    transition: opacity 0.3s;
+body.dark-mode .nav-links a:hover::after,
+body.dark-mode .nav-links a.active::after {
+    width: 70%;
 }
 
-.nav-links a:hover {
-    opacity: 0.8;
-}
-
-/* ===== USER PROFILE COLOR FIX ===== */
-
-/* user profile - light mode me BLACK, dark mode me WHITE */
+/* ===== USER PROFILE ===== */
 .user-profile {
-    font-weight: 500;
+    font-weight: 600;
     transition: color 0.3s ease;
 }
 
-/* light mode - BLACK text (navbar green pe) */
 body:not(.dark-mode) .user-profile span {
-    color: #1a202c; /* dark black */
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3); /* white shadow for contrast */
+    color: #000000;
 }
 
-/* dark mode - WHITE text (navbar dark pe) */
 body.dark-mode .user-profile span {
-    color: #ffffff; /* pure white */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* black shadow for depth */
+    color: #ffffff;
 }
-
+/* #2d3748 */
+/* ===== DARK MODE NAVBAR ===== */
+body.dark-mode .navbar {
+    background-color: #000000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
 /* extra bold for better visibility */
 .user-profile span {
     font-weight: 600;
@@ -721,4 +760,120 @@ body.dark-mode .navbar {
 /* ensure visibility in both modes */
 .user-profile span {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* subtle shadow for readability */
+}
+/* ===== FOOTER STYLING ===== */
+.footer {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 20px 20px;
+    margin-top: 60px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-brand .footer-logo {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.footer-tagline {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.footer-links h4,
+.footer-info h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.3s;
+}
+
+.footer-links ul li a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.footer-info p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+    font-size: 24px;
+}
+
+.footer-social a {
+    transition: transform 0.3s;
+}
+
+.footer-social a:hover {
+    transform: scale(1.2);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-bottom p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Dark mode footer */
+body.dark-mode .footer {
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+}
+
+/* Responsive footer */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-social {
+        justify-content: center;
+    }
+}
+/* Logo hover effect */
+.logo {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
 }

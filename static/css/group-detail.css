@@ -1,0 +1,477 @@
+/* ===== GROUP DETAIL PAGE STYLING ===== */
+
+/* Page Header */
+.page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: fit-content;
+}
+
+.back-btn:hover {
+    background: #f7fafc;
+    border-color: #1cc29f;
+    color: #1cc29f;
+    transform: translateX(-3px);
+}
+
+.page-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+}
+
+.page-subtitle {
+    font-size: 16px;
+    color: #718096;
+    margin: 0;
+}
+
+/* Section Titles */
+.section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 20px;
+}
+
+/* Divider */
+.divider {
+    border: none;
+    border-top: 2px solid #e2e8f0;
+    margin: 40px 0;
+}
+
+/* ===== GROUP SUMMARY ===== */
+.group-summary {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.member-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.member-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #f7fafc;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.member-item:hover {
+    background: #edf2f7;
+    transform: translateX(5px);
+}
+
+.member-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.member-role {
+    font-size: 14px;
+    color: #718096;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.action-buttons button {
+    flex: 1;
+}
+
+.settle-btn {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.settle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* ===== EXPENSES SECTION ===== */
+.expenses-section {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.expenses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.expense-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 12px;
+    border-left: 4px solid #1cc29f;
+    transition: all 0.3s ease;
+}
+
+.expense-card:hover {
+    background: #edf2f7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.expense-info {
+    flex: 1;
+}
+
+.expense-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 8px 0;
+}
+
+.expense-meta {
+    font-size: 14px;
+    color: #718096;
+    margin: 0;
+}
+
+.expense-meta strong {
+    color: #4a5568;
+}
+
+.expense-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1cc29f;
+}
+
+/* Empty Message */
+.empty-message {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 16px;
+    padding: 40px 20px;
+}
+
+/* ===== BALANCES SECTION ===== */
+.balances-section {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.balance-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.balance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    background: #f7fafc;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.balance-item:hover {
+    background: #edf2f7;
+}
+
+.balance-user {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.balance-amount {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.balance-amount.positive {
+    color: #1cc29f;
+}
+
+.balance-amount.negative {
+    color: #ff6b6b;
+}
+
+.balance-amount.settled {
+    color: #a0aec0;
+}
+
+/* ===== MODAL STYLING ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideUp 0.3s ease;
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #718096;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    background: #f1f5f9;
+    color: #2d3748;
+    transform: rotate(90deg);
+}
+
+/* Modal Form */
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn-cancel,
+.btn-submit {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel {
+    background: #f7fafc;
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+}
+
+.btn-cancel:hover {
+    background: #edf2f7;
+    border-color: #cbd5e0;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #1cc29f, #17a085);
+    color: white;
+    box-shadow: 0 4px 15px rgba(28, 194, 159, 0.3);
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(28, 194, 159, 0.4);
+}
+
+/* ===== DARK MODE ===== */
+body.dark-mode .page-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .page-subtitle {
+    color: #a0aec0;
+}
+
+body.dark-mode .section-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .divider {
+    border-top-color: #4a5568;
+}
+
+body.dark-mode .group-summary,
+body.dark-mode .expenses-section,
+body.dark-mode .balances-section {
+    background: #2d3748;
+}
+
+body.dark-mode .member-item,
+body.dark-mode .expense-card,
+body.dark-mode .balance-item {
+    background: #1a202c;
+}
+
+body.dark-mode .member-item:hover,
+body.dark-mode .expense-card:hover,
+body.dark-mode .balance-item:hover {
+    background: #374151;
+}
+
+body.dark-mode .member-name,
+body.dark-mode .expense-title,
+body.dark-mode .balance-user {
+    color: #e2e8f0;
+}
+
+body.dark-mode .modal-content {
+    background: #2d3748;
+}
+
+body.dark-mode .modal-header {
+    border-bottom-color: #4a5568;
+}
+
+body.dark-mode .modal-header h2 {
+    color: #e2e8f0;
+}
+
+body.dark-mode .close-modal {
+    color: #a0aec0;
+}
+
+body.dark-mode .close-modal:hover {
+    background: #374151;
+    color: #e2e8f0;
+}
+
+body.dark-mode .btn-cancel {
+    background: #374151;
+    color: #e2e8f0;
+    border-color: #4a5568;
+}
+
+body.dark-mode .btn-cancel:hover {
+    background: #4a5568;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 28px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .expense-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .expense-amount {
+        font-size: 20px;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+}

@@ -75,7 +75,7 @@ def create_group():
         return redirect(url_for('groups.index'))
 
    
-    return render_template('create_group.html', form=form)
+    return render_template('create-group.html', form=form)
 
 @group_bp.route('/<group_id>')
 @login_required

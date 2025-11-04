@@ -1,52 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../static/css/mobile-responsive.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-responsive.css') }}">
     <title>Splitwisely - Home</title>
-    <link rel="stylesheet" href="../static/css/style.css"></head>
-    <link rel="stylesheet" href="../static/css/page-transitions.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
+</head>
 <body>
     
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <h1 class="logo">Splitwisely</h1>
-            <ul class="nav-links">
-                <li><a href="{{ url_for('dashboard') }}" class="active">Dashboard</a></li>
-                <li><a href="{{url_for('groups.index')}}">Groups</a></li>
-                <li><a href="friends.html">Friends</a></li>
-                <li><a href="activity.html">Activity</a></li>
-            </ul>
-
-            <!-- user greeting -->
-            <div class="user-profile">
-                <span>Hi, PRAADA!</span>
-            </div>
-
-           <!-- DARK MODE TOGGLE -->
-<div class="theme-toggle">
-    <input type="checkbox" id="themeToggle" class="toggle-checkbox">
-    <label for="themeToggle" class="toggle-label">
-        <span class="toggle-ball">
-            <svg class="icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            </svg>
-            <svg class="icon moon-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> A` = Arc** M` = Move To  Another Arc A 7 7 0 0 0 21 12.79  
-            </svg>
-        </span>
-    </label>
-</div>
-        </div>
-    </nav>
+    <!-- NAVBAR - Component include -->
+    {% include 'components/navbar.html' %}
 
     <!-- MAIN CONTENT -->
     <div class="main-container">
@@ -184,7 +149,10 @@
         </div>
     </div>
 
-    <script src="../static/js/app.js"></script>
-    <script src="../static/js/mobile-menu.js"></script>
+    <!-- FOOTER - Component include -->
+    {% include 'components/footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mobile-menu.js') }}"></script>
 </body>
 </html>

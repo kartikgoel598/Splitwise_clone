@@ -11,28 +11,7 @@
     <link rel="stylesheet" href="../static/css/page-transitions.css" />
   </head>
   <body>
-    <nav class="navbar">
-      <div class="nav-container">
-        <h1 class="logo">Splitwisely</h1>
-        <ul class="nav-links">
-          <li><a href="{{url_for('dashboard')}}">Dashboard</a></li>
-          <li>
-            <a href="{{url_for('groups.index')}}" class="active">Groups</a>
-          </li>
-          <li><a href="friends.html">Friends</a></li>
-          <li><a href="activity.html">Activity</a></li>
-        </ul>
-        <div class="user-profile">
-          <span>Hi, PRAADA!</span>
-        </div>
-        <div class="theme-toggle">
-          <input type="checkbox" id="themeToggle" class="toggle-checkbox" />
-          <label for="themeToggle" class="toggle-label">
-            <span class="toggle-ball"></span>
-          </label>
-        </div>
-      </div>
-    </nav>
+    {% include 'components/navbar.html' %}
 
     <div class="main-container">
       <div class="page-header">

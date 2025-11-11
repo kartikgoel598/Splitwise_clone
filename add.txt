@@ -1,0 +1,10 @@
+Make one button (add member) in group detail page ✅
+add dark mode toggle button in group_detail.html page
+jab user settle up kare group detail page mese tab usko show ho ki "X" amount total amount mese - hogya hai 
+jese 100 - 20(settle up amount) toh ja kr 80 bacha 
+Create both delete AND exit button from nornmal group page for example if user wants to delete any group he can't delete until his balance gets cleared 
+admin can edit the group name or add image or icon for that ~ to create icon or wallpaper add a page where there are some wallpapers so that user can select them too or can import from there personal device but only admin can do that 
+user cannnot copy any thing except text and cannot paste anything axcept text
+when user enter wrong username, ID & password so there should me a message for that 
+password hide button is not working 
+fix the css of Add expense wpf form 

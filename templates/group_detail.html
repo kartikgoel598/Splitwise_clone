@@ -1,221 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ group.name }} - Split Wisely</title>
- 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/groups.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ group.name }} - Split Wisely</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/groups.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/group-detail.css') }}">
 </head>
+
 <body>
- 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <h1 class="logo">Splitwisely</h1>
- 
-            <ul class="nav-links">
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('groups.index') }}" class="active">Groups</a></li>
-                <li><a href="#">Friends</a></li>
-                <li><a href="#">Activity</a></li>
-            </ul>
- 
-            <div class="user-profile">
-                <span>Hi, {{ session.get('username', 'User') }}!</span>
-            </div>
-        </div>
-    </nav>
- 
-    <div class="main-container">
- 
-        <!-- Header -->
-        <div class="page-header">
-            <a href="{{ url_for('groups.index') }}" class="back-btn">← Back to Groups</a>
-            <h1 class="page-title">{{ group.name }}</h1>
-            <p class="page-subtitle">{{ group.description or "Group details" }}</p>
-            <button id="openAddExpense" class="create-group-btn">
-  + Add Expense
-</button>
- 
-        </div>
- 
-        <!-- Group Summary -->
-        <div class="group-summary">
-            <h2>Group Members</h2>
-            <ul class="member-list">
-                {% for m in members %}
-                    <li>{{ m['users']['username'] }} <span class="role">({{ m['role'] }})</span></li>
-                {% endfor %}
-            </ul>
- 
-            <div class="add-expense-btn-container">
-                <a href="#" class="create-group-btn">+ Add Expense</a>
-                <a href="#" class="settle-btn">Settle Up</a>
-            </div>
-        </div>
- 
-        <hr class="divider">
- 
-        <!-- Expenses Section -->
-        <div class="expenses-section">
-            <h2>Group Expenses</h2>
-           
-            {% if expenses %}
-                <div class="expenses-list">
-                    {% for e in expenses %}
-                        <div class="expense-card">
-                            <div class="expense-info">
-                                <h3 class="expense-title">{{ e.description }}</h3>
-                                <p class="expense-meta">
-                                    Added by <strong>{{ e.users.username }}</strong> •
-                                    {{ e.created_at[:10] }}
-                                </p>
-                            </div>
-                            <div class="expense-amount">
-                                ${{ "%.2f"|format(e.amount) }}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p style="text-align:center; color:#a0aec0;">No expenses yet. Add one to get started 💸</p>
-            {% endif %}
-        </div>
- 
-        <hr class="divider">
- 
-        <!-- Balances -->
-        <div class="balances-section">
-            <h2>Balances</h2>
-            {% if balances %}
-                <ul class="balance-list">
-                    {% for b in balances %}
-                        <li>
-                            User {{b.username}}
-                            <span class="{% if b.net > 0 %}positive{% elif b.net < 0 %}negative{% else %}settled{% endif %}">
-                                {{ "$" ~ b.net }}
-                            </span>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p style="text-align:center; color:#a0aec0;">No balances yet.</p>
-            {% endif %}
-        </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <h1 class="logo">Splitwisely</h1>
+
+      <ul class="nav-links">
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('groups.index') }}" class="active">Groups</a></li>
+        <li><a href="#">Friends</a></li>
+        <li><a href="#">Activity</a></li>
+      </ul>
+
+      <div class="user-profile">
+        <span>Hi, {{ session.get('username', 'User') }}!</span>
+      </div>
     </div>
- 
-    <div class="modal-overlay" id="addExpenseModal" style="display: none;">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>Add Expense</h2>
-      <button class="close-modal" id="closeAddExpense">&times;</button>
+  </nav>
+
+  <div class="main-container">
+
+    <!-- Header -->
+    <div class="page-header">
+      <a href="{{ url_for('groups.index') }}" class="back-btn">← Back to Groups</a>
+      <h1 class="page-title">{{ group.name }}</h1>
+      <p class="page-subtitle">{{ group.description or "Group details" }}</p>
     </div>
 
-    <form method="POST" action="{{ url_for('expenses.add_expenses', group_id=group.id) }}">
-      {{ add_expense_form.hidden_tag() }}
+    <!-- Group Summary -->
+    <div class="group-summary">
+      <h2>Group Members</h2>
+      <ul class="member-list">
+        {% for m in members %}
+        <li>{{ m['users']['username'] }} <span class="role">({{ m['role'] }})</span></li>
+        {% endfor %}
+      </ul>
 
-      <div class="form-group">
-        {{ add_expense_form.description.label(class="form-label") }}
-        {{ add_expense_form.description(class="form-input", placeholder="Dinner at restaurant") }}
-        {% for e in add_expense_form.description.errors %}
-          <small class="error">{{ e }}</small>
+      <div class="add-expense-btn-container">
+        <a href="#" id="openAddExpense" class="create-group-btn">+ Add Expense</a>
+        <a href="#" class="settle-btn">Settle Up</a>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Expenses Section -->
+    <div class="expenses-section">
+      <h2>Group Expenses</h2>
+
+      {% if expenses %}
+      <div class="expenses-list">
+        {% for e in expenses %}
+        <div class="expense-card">
+          <div class="expense-info">
+            <h3 class="expense-title">{{ e.description }}</h3>
+            <p class="expense-meta">
+              Added by <strong>{{ e.users.username }}</strong> • {{ e.created_at[:10] }}
+            </p>
+          </div>
+          <div class="expense-amount">
+            ${{ "%.2f"|format(e.amount) }}
+          </div>
+        </div>
         {% endfor %}
       </div>
- 
-      <div class="form-group">
-        {{ add_expense_form.amount.label(class="form-label") }}
-        {{ add_expense_form.amount(class="form-input", placeholder="0.00") }}
-        {% for e in add_expense_form.amount.errors %}
-          <small class="error">{{ e }}</small>
+      {% else %}
+      <p style="text-align:center; color:#a0aec0;">No expenses yet. Add one to get started 💸</p>
+      {% endif %}
+    </div>
+
+    <hr class="divider">
+
+    <!-- Balances Section -->
+    <div class="balances-section">
+      <h2>Balances</h2>
+      {% if balances %}
+      <ul class="balance-list">
+        {% for b in balances %}
+        <li>
+          User {{ b.username }}
+          <span class="{% if b.net > 0 %}positive{% elif b.net < 0 %}negative{% else %}settled{% endif %}">
+            {{ "$" ~ b.net }}
+          </span>
+        </li>
         {% endfor %}
-      </div>
- 
-      <div class="form-group">
-        {{ add_expense_form.paid_by.label(class="form-label") }}
-        {{ add_expense_form.paid_by(class="form-input") }}
-      </div>
- 
-      <div class="form-group">
-        {{ add_expense_form.split_type.label(class="form-label") }}
-        {{ add_expense_form.split_type(class="form-radio") }}
-      </div>
- 
-      <div class="modal-actions">
-        <button type="button" class="cancel-btn" id="cancelAddExpense">Cancel</button>
-        {{ add_expense_form.submit(class="create-btn") }}
-      </div>
-    </form>
+      </ul>
+      {% else %}
+      <p style="text-align:center; color:#a0aec0;">No balances yet.</p>
+      {% endif %}
+    </div>
   </div>
-  
-</div>
-<!-- 🟢 SETTLE UP MODAL -->
-<div class="modal-overlay" id="settleUpModal" style="display: none;">
-  <div class="modal-content">
 
-    <div class="modal-header">
-      <h2>Settle Up</h2>
-      <button class="close-modal" id="closeSettleUp">&times;</button>
+  <!-- 🟢 ADD EXPENSE MODAL -->
+  <div class="modal-overlay" id="addExpenseModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add Expense</h2>
+        <button class="close-modal" id="closeAddExpense">&times;</button>
+      </div>
+
+      <form method="POST" action="{{ url_for('expenses.add_expenses', group_id=group.id) }}">
+        {{ add_expense_form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ add_expense_form.description.label(class="form-label") }}
+          {{ add_expense_form.description(class="form-input", placeholder="Dinner at restaurant") }}
+          {% for e in add_expense_form.description.errors %}
+          <small class="error">{{ e }}</small>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ add_expense_form.amount.label(class="form-label") }}
+          {{ add_expense_form.amount(class="form-input", placeholder="0.00") }}
+          {% for e in add_expense_form.amount.errors %}
+          <small class="error">{{ e }}</small>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ add_expense_form.paid_by.label(class="form-label") }}
+          {{ add_expense_form.paid_by(class="form-input") }}
+        </div>
+
+        <div class="form-group">
+          {{ add_expense_form.split_type.label(class="form-label") }}
+          {{ add_expense_form.split_type(class="form-radio") }}
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" id="cancelAddExpense">Cancel</button>
+          {{ add_expense_form.submit(class="create-btn") }}
+        </div>
+      </form>
     </div>
-
-    <form method="POST" action="{{ url_for('payments.settle_up', group_id=group.id) }}">
-      {{ settle_form.hidden_tag() }}
-
-      <div class="form-group">
-        {{ settle_form.pay_to.label(class="form-label") }}
-        {{ settle_form.pay_to(class="form-input") }}
-        {% for e in settle_form.pay_to.errors %}
-          <small class="error">{{ e }}</small>
-        {% endfor %}
-      </div>
-
-      <div class="form-group">
-        {{ settle_form.amount.label(class="form-label") }}
-        {{ settle_form.amount(class="form-input", placeholder="Enter amount") }}
-        {% for e in settle_form.amount.errors %}
-          <small class="error">{{ e }}</small>
-        {% endfor %}
-      </div>
-
-      <div class="modal-actions">
-        <button type="button" class="cancel-btn" id="cancelSettleUp">Cancel</button>
-        {{ settle_form.submit(class="create-btn") }}
-      </div>
-    </form>
   </div>
-</div>
+
+  <!-- 🟢 SETTLE UP MODAL -->
+  <div class="modal-overlay" id="settleUpModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settle Up</h2>
+        <button class="close-modal" id="closeSettleUp">&times;</button>
+      </div>
+
+      <form method="POST" action="{{ url_for('payments.settle_up', group_id=group.id) }}">
+        {{ settle_form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ settle_form.pay_to.label(class="form-label") }}
+          {{ settle_form.pay_to(class="form-input") }}
+          {% for e in settle_form.pay_to.errors %}
+          <small class="error">{{ e }}</small>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ settle_form.amount.label(class="form-label") }}
+          {{ settle_form.amount(class="form-input", placeholder="Enter amount") }}
+          {% for e in settle_form.amount.errors %}
+          <small class="error">{{ e }}</small>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          <label for="settleMethod" class="form-label">Choose Payment Method</label>
+          <select id="settleMethod" class="form-input">
+            <option value="inapp">Settle in App</option>
+            <option value="paypal">Pay with PayPal</option>
+          </select>
+        </div>
 
 
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" id="cancelSettleUp">Cancel</button>
+          {{ settle_form.submit(class="create-btn") }}
+        </div>
+      </form>
+    </div>
+  </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const openBtn = document.getElementById("openAddExpense");
-  const modal = document.getElementById("addExpenseModal");
-  const closeBtn = document.getElementById("closeAddExpense");
-  const cancelBtn = document.getElementById("cancelAddExpense");
- 
-  if (openBtn) openBtn.addEventListener("click", () => modal.style.display = "flex");
-  if (closeBtn) closeBtn.addEventListener("click", () => modal.style.display = "none");
-  if (cancelBtn) cancelBtn.addEventListener("click", () => modal.style.display = "none");
-});
-</script>
+  <!-- ================= SCRIPTS =================
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // --- Add Expense Modal ---
+    const openBtn = document.getElementById("openAddExpense");
+    const addModal = document.getElementById("addExpenseModal");
+    const closeBtn = document.getElementById("closeAddExpense");
+    const cancelBtn = document.getElementById("cancelAddExpense");
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const openSettleBtn = document.querySelector(".settle-btn");
-  const modal = document.getElementById("settleUpModal");
-  const closeBtn = document.getElementById("closeSettleUp");
-  const cancelBtn = document.getElementById("cancelSettleUp");
+    if (openBtn) openBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      addModal.style.display = "flex";
+    });
+    if (closeBtn) closeBtn.addEventListener("click", () => addModal.style.display = "none");
+    if (cancelBtn) cancelBtn.addEventListener("click", () => addModal.style.display = "none");
 
-  if (openSettleBtn) openSettleBtn.addEventListener("click", () => modal.style.display = "flex");
-  if (closeBtn) closeBtn.addEventListener("click", () => modal.style.display = "none");
-  if (cancelBtn) cancelBtn.addEventListener("click", () => modal.style.display = "none");
-});
-</script>
+    // --- Settle Up Modal ---
+    const openSettleBtn = document.querySelector(".settle-btn");
+    const settleModal = document.getElementById("settleUpModal");
+    const closeSettleBtn = document.getElementById("closeSettleUp");
+    const cancelSettleBtn = document.getElementById("cancelSettleUp");
 
-
+    if (openSettleBtn) openSettleBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      settleModal.style.display = "flex";
+    });
+    if (closeSettleBtn) closeSettleBtn.addEventListener("click", () => settleModal.style.display = "none");
+    if (cancelSettleBtn) cancelSettleBtn.addEventListener("click", () => settleModal.style.display = "none");
+  });
+  </script> -->
+  <script>
+    const GROUP_ID = "{{ group.id }}";
+  </script>
+  <script src="{{ url_for('static', filename='js/group-detail.js') }}"></script>
 
 </body>
+
 </html>

@@ -107,47 +107,57 @@
   </div>
 
   <!-- 🟢 ADD EXPENSE MODAL -->
-  <div class="modal-overlay" id="addExpenseModal" style="display: none;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Add Expense</h2>
-        <button class="close-modal" id="closeAddExpense">&times;</button>
+   <div class="modal-overlay" id="addExpenseModal" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Add Expense</h2>
+      <button class="close-modal" id="closeAddExpense">&times;</button>
+    </div>
+
+    <form method="POST" action="{{ url_for('expenses.add_expenses', group_id=group.id) }}">
+      {{ add_expense_form.hidden_tag() }}
+
+      <div class="form-group">
+        {{ add_expense_form.description.label(class="form-label") }}
+        {{ add_expense_form.description(class="form-input", placeholder="Dinner at restaurant") }}
+        {% for e in add_expense_form.description.errors %}
+          <small class="error">{{ e }}</small>
+        {% endfor %}
       </div>
-
-      <form method="POST" action="{{ url_for('expenses.add_expenses', group_id=group.id) }}">
-        {{ add_expense_form.hidden_tag() }}
-
-        <div class="form-group">
-          {{ add_expense_form.description.label(class="form-label") }}
-          {{ add_expense_form.description(class="form-input", placeholder="Dinner at restaurant") }}
-          {% for e in add_expense_form.description.errors %}
+ 
+      <div class="form-group">
+        {{ add_expense_form.amount.label(class="form-label") }}
+        {{ add_expense_form.amount(class="form-input", placeholder="0.00") }}
+        {% for e in add_expense_form.amount.errors %}
           <small class="error">{{ e }}</small>
-          {% endfor %}
-        </div>
+        {% endfor %}
+      </div>
+ 
+      <div class="form-group">
+        {{ add_expense_form.paid_by.label(class="form-label") }}
+        {{ add_expense_form.paid_by(class="form-input") }}
+      </div>
+ 
+      <div class="form-group">
+        {{ add_expense_form.split_type.label(class="form-label") }}
+        {{ add_expense_form.split_type(class="form-radio") }}
+      </div>
+ 
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" id="cancelAddExpense">Cancel</button>
+        {{ add_expense_form.submit(class="create-btn") }}
+      </div>
+    </form>
+  </div>
+  
+</div>
+<!-- 🟢 SETTLE UP MODAL -->
+<div class="modal-overlay" id="settleUpModal" style="display: none;">
+  <div class="modal-content">
 
-        <div class="form-group">
-          {{ add_expense_form.amount.label(class="form-label") }}
-          {{ add_expense_form.amount(class="form-input", placeholder="0.00") }}
-          {% for e in add_expense_form.amount.errors %}
-          <small class="error">{{ e }}</small>
-          {% endfor %}
-        </div>
-
-        <div class="form-group">
-          {{ add_expense_form.paid_by.label(class="form-label") }}
-          {{ add_expense_form.paid_by(class="form-input") }}
-        </div>
-
-        <div class="form-group">
-          {{ add_expense_form.split_type.label(class="form-label") }}
-          {{ add_expense_form.split_type(class="form-radio") }}
-        </div>
-
-        <div class="modal-actions">
-          <button type="button" class="cancel-btn" id="cancelAddExpense">Cancel</button>
-          {{ add_expense_form.submit(class="create-btn") }}
-        </div>
-      </form>
+    <div class="modal-header">
+      <h2>Settle Up</h2>
+      <button class="close-modal" id="closeSettleUp">&times;</button>
     </div>
 
     <form method="POST" action="{{ url_for('payments.settle_up', group_id=group.id) }}">
@@ -182,47 +192,12 @@
       </div>
     </form>
   </div>
+</div>
 
-  <!-- 🟢 SETTLE UP MODAL -->
-  <div class="modal-overlay" id="settleUpModal" style="display: none;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Settle Up</h2>
-        <button class="close-modal" id="closeSettleUp">&times;</button>
-      </div>
-
-      <form method="POST" action="{{ url_for('payments.settle_up', group_id=group.id) }}">
-        {{ settle_form.hidden_tag() }}
-
-        <div class="form-group">
-          {{ settle_form.pay_to.label(class="form-label") }}
-          {{ settle_form.pay_to(class="form-input") }}
-          {% for e in settle_form.pay_to.errors %}
-          <small class="error">{{ e }}</small>
-          {% endfor %}
-        </div>
-
-        <div class="form-group">
-          {{ settle_form.amount.label(class="form-label") }}
-          {{ settle_form.amount(class="form-input", placeholder="Enter amount") }}
-          {% for e in settle_form.amount.errors %}
-          <small class="error">{{ e }}</small>
-          {% endfor %}
-        </div>
-
-        <div class="form-group">
-          <label for="settleMethod" class="form-label">Choose Payment Method</label>
-          <select id="settleMethod" class="form-input">
-            <option value="inapp">Settle in App</option>
-            <option value="paypal">Pay with PayPal</option>
-          </select>
-        </div>
-
-
-  <script>
-    const GROUP_ID = "{{ group.id }}";
-  </script>
-  <script src="{{ url_for('static', filename='js/group-detail.js') }}"></script>
+<script>
+  const GROUP_ID = "{{ group.id }}";
+</script>
+<script src="{{ url_for('static', filename='js/group_detail.js') }}"></script>
 
 </body>
 

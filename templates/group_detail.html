@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/groups.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
+
 </head>
 <body>
  
@@ -36,9 +37,7 @@
             <a href="{{ url_for('groups.index') }}" class="back-btn">← Back to Groups</a>
             <h1 class="page-title">{{ group.name }}</h1>
             <p class="page-subtitle">{{ group.description or "Group details" }}</p>
-            <button id="openAddExpense" class="create-group-btn">
-  + Add Expense
-</button>
+            
  
         </div>
  
@@ -52,10 +51,10 @@
             </ul>
  
             <div class="add-expense-btn-container">
-                <a href="#" class="create-group-btn">+ Add Expense</a>
-                <a href="#" class="settle-btn">Settle Up</a>
-            </div>
-        </div>
+        <a href='#' id="openAddExpense" class="create-group-btn">+ Add Expense</a>
+        <a href="#" class="settle-btn">Settle Up</a>
+      </div>
+    </div>
  
         <hr class="divider">
  
@@ -178,43 +177,26 @@
           <small class="error">{{ e }}</small>
         {% endfor %}
       </div>
+      <div class="form-group">
+        <label for="settleMethod" class="form-label">Choose Payment Method</label>
+        <select id="settleMethod" class="form-input">
+          <option value="inapp">Settle in App</option>
+          <option value="paypal">Pay with PayPal</option>
+        </select>
+      </div>
 
       <div class="modal-actions">
         <button type="button" class="cancel-btn" id="cancelSettleUp">Cancel</button>
-        {{ settle_form.submit(class="create-btn") }}
+        <button type="submit" class="create-btn">Settle Now</button>
       </div>
     </form>
   </div>
 </div>
 
-
-
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const openBtn = document.getElementById("openAddExpense");
-  const modal = document.getElementById("addExpenseModal");
-  const closeBtn = document.getElementById("closeAddExpense");
-  const cancelBtn = document.getElementById("cancelAddExpense");
- 
-  if (openBtn) openBtn.addEventListener("click", () => modal.style.display = "flex");
-  if (closeBtn) closeBtn.addEventListener("click", () => modal.style.display = "none");
-  if (cancelBtn) cancelBtn.addEventListener("click", () => modal.style.display = "none");
-});
+  const GROUP_ID = "{{ group.id }}";
 </script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const openSettleBtn = document.querySelector(".settle-btn");
-  const modal = document.getElementById("settleUpModal");
-  const closeBtn = document.getElementById("closeSettleUp");
-  const cancelBtn = document.getElementById("cancelSettleUp");
-
-  if (openSettleBtn) openSettleBtn.addEventListener("click", () => modal.style.display = "flex");
-  if (closeBtn) closeBtn.addEventListener("click", () => modal.style.display = "none");
-  if (cancelBtn) cancelBtn.addEventListener("click", () => modal.style.display = "none");
-});
-</script>
-
+<script src="{{ url_for('static', filename='js/group_detail.js') }}"></script>
 
 
 </body>

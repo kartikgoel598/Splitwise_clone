@@ -12,7 +12,10 @@ from blueprints.payments import payments_bp
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', "dev-secret")
-csrf = CSRFProtect(app)
+# in app.py
+app.config["WTF_CSRF_ENABLED"] = False
+csrf = CSRFProtect()
+csrf.init_app(app)
 
 
 @app.context_processor

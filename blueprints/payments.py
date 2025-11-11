@@ -20,27 +20,27 @@ def check_user_in_group(user_id, group_id):
 def settle_up(group_id):
     form = SettlementForm()
     user_id = session.get('user_id')
-
-    
+ 
+   
     group_res = supabase.table('groups').select('*').eq('id', group_id).single().execute()
     group = group_res.data
-
-    
+ 
+   
     group_members_res = supabase.table('group_members').select('user_id, users(username)').eq('group_id', group_id).execute()
     members = group_members_res.data or []
-
+ 
     if not members:
         flash('No members found for this group', "error")
         return redirect(url_for('groups.index'))
-
+ 
    
     form.pay_to.choices = [(m['user_id'], m['users']['username']) for m in members if m['user_id'] != user_id]
-
+ 
    
     if form.validate_on_submit():
         pay_to = form.pay_to.data
         amount = form.amount.data
-
+ 
         supabase.table('settlements').insert({
             'group_id': group_id,
             'sender_id': user_id,
@@ -49,18 +49,18 @@ def settle_up(group_id):
             'status': 'completed',
             'settled_at': datetime.utcnow().isoformat()
         }).execute()
-
+ 
         flash("Settlement recorded successfully!", "success")
         return redirect(url_for('groups.group_detail', group_id=group_id))
-
-    
+ 
+   
     expenses_list = supabase.table('expenses').select('id, description, amount, paid_by, users:paid_by(username)').eq('group_id', group_id).execute()
     expenses = expenses_list.data or []
-
-    
+ 
+   
     balances = compute_group_balances(group_id)
-
-    
+ 
+   
     return render_template(
         "group_detail.html",
         group=group,
@@ -70,7 +70,6 @@ def settle_up(group_id):
         add_expense_form=AddExpenseForm(),
         settle_form=form
     )
-
 @payments_bp.route('/groups/<group_id>/settlement/start',methods=['POST','GET'])
 #@login_required
 def start_settlement(group_id):
@@ -133,7 +132,6 @@ def capture_settlement(group_id):
     settlements = (settlement_res.data or [None])[0]
     if not settlements:
         return jsonify({"error": "settlement not found"}), 404
-
     if settlements["sender_id"] != user_id:
         return jsonify({"error": "not your settlement"}), 403
     capture_function_response= capture_order(order_id)
@@ -163,7 +161,6 @@ def paypal_success():
     csrf.exempt(paypal_success)
     order_id = request.args.get('token')
     print('paypal success called with order id:',order_id)
-
     settlement_res = supabase.table('settlements').select('*').eq('paypal_order_id',order_id).limit(1).execute()
     settlement = (settlement_res.data or [None])[0]
     if not settlement:
@@ -171,7 +168,6 @@ def paypal_success():
         return redirect(url_for('dashboard'))
     settlement_id = settlement['id']
     group_id = settlement['group_id']
-
     capture_function_response = capture_order(order_id)
     pu = capture_function_response['purchase_units'][0]
     capture_obj = pu['payments']['captures'][0]
@@ -180,7 +176,6 @@ def paypal_success():
     payer_email = capture_function_response.get('payer', {}).get('email_address')
     if float(capture_value) != float(settlement["amount"]):
         return jsonify({"error": "amount mismatch"}), 400
-
     supabase.table("settlements").update({
         "status": "completed" if status == "COMPLETED" else status.lower(),
         "settled_at": datetime.utcnow().isoformat(),

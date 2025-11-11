@@ -2,13 +2,11 @@ import os
 from dotenv import load_dotenv
 import requests
 import base64
-
 load_dotenv()
 PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
 PAYPAL_SECRET_KEY = os.getenv('PAYPAL_SECRET_KEY')
 PAYPAL_URL = os.getenv('PAYPAL_URL')
 PAYPAL_CURRENCY = 'NZD'
-
 def _access_token():
     auth = base64.b64encode(f'{PAYPAL_CLIENT_ID}:{PAYPAL_SECRET_KEY}'.encode()).decode()
     response = requests.post(
@@ -19,7 +17,7 @@ def _access_token():
     )
     response.raise_for_status()
     return response.json().get("access_token")
-
+ 
 def create_order(amount:str)->dict:
     token = _access_token()
     body = {
@@ -44,7 +42,6 @@ def create_order(amount:str)->dict:
     )
     response.raise_for_status()
     return response.json()
-
 def capture_order(order_id:str)-> dict:
     token = _access_token()
     response= requests.post(

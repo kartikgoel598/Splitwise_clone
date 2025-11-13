@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, FieldList, SubmitField
-from wtforms.validators import DataRequired, Length, Email, ValidationError
+from wtforms import StringField, TextAreaField, FieldList, SubmitField,SelectField
+from wtforms.validators import DataRequired, Length, Email, ValidationError,Optional
 from services.db import supabase
 
 class CreateGroupForm(FlaskForm):
@@ -24,6 +24,27 @@ class CreateGroupForm(FlaskForm):
     )
 
     submit = SubmitField('Create Group')
+
+class EditGroupForm(FlaskForm):
+    # Group info
+    group_name = StringField("Group Name", validators=[DataRequired()])
+    description = TextAreaField("Description", validators=[Optional()])
+
+    # Add member
+    email = StringField("Add Member by Email", validators=[Optional(), Email()])
+
+    # Remove member
+    member_to_remove = SelectField("Select Member to Remove", coerce=str, validators=[Optional()])
+
+    
+    submit = SubmitField("Save All Changes")
+
+
+
+class DeleteGroupForm(FlaskForm):
+    submit = SubmitField("Delete Group")
+
+
 
     # Custom validation to check if emails exist in users table
     def validate_members(self, field):

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Group - {{ group.name }}</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/groups.css') }}">
+</head>
+
+<body>
+  <!-- 🟢 Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <h1 class="logo">SplitWisely</h1>
+      <ul class="nav-links">
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('groups.index') }}" class="active">Groups</a></li>
+      </ul>
+      <div class="user-profile">
+        <span>Hi, {{ session.get('username', 'User') }}!</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+
+    <!-- 🟢 Header -->
+    <div class="page-header">
+      <a href="{{ url_for('groups.group_detail', group_id=group.id) }}" class="back-btn">← Back to Group</a>
+      <h1>Edit Group: {{ group.name }}</h1>
+      <p class="page-subtitle">Manage group details and members</p>
+    </div>
+
+    <!-- 🟢 Unified Form -->
+    <form method="POST" action="{{ url_for('groups.edit_group', group_id=group.id) }}" class="edit-group-form">
+      {{ edit_form.hidden_tag() }}
+
+      <!-- Group Info -->
+      <section class="form-section">
+        <h2>Group Information</h2>
+        <div class="form-group">
+          {{ edit_form.group_name.label(class="form-label") }}
+          {{ edit_form.group_name(class="form-input") }}
+        </div>
+
+        <div class="form-group">
+          {{ edit_form.description.label(class="form-label") }}
+          {{ edit_form.description(class="form-input", placeholder="Enter group description") }}
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- Add Member -->
+      <section class="form-section">
+        <h2>Add Member</h2>
+        <div class="form-group">
+          {{ edit_form.email.label(class="form-label") }}
+          {{ edit_form.email(class="form-input", placeholder="Enter member email") }}
+          <small class="note">* Only registered users can be added.</small>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- Remove Member -->
+      <section class="form-section">
+        <h2>Remove Member</h2>
+        <div class="form-group">
+          {{ edit_form.member_to_remove.label(class="form-label") }}
+          {{ edit_form.member_to_remove(class="form-input") }}
+          <small class="note">* You cannot remove members who still owe or are owed money.</small>
+        </div>
+      </section>
+
+      <!-- Submit Button -->
+      <div class="form-actions" style="margin-top: 25px;">
+        {{ edit_form.submit(class="create-btn") }}
+      </div>
+    </form>
+  </div>
+</body>
+</html>

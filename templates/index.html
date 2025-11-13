@@ -1,158 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-responsive.css') }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile-responsive.css') }}"
+    />
     <title>Splitwisely - Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
-</head>
-<body>
-    
-    <!-- NAVBAR - Component include -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/page-transitions.css') }}"
+    />
+  </head>
+  <body>
     {% include 'components/navbar.html' %}
 
-    <!-- MAIN CONTENT -->
-    <div class="main-container">
-        
-        <!-- BALANCE SUMMARY SECTION -->
-        <section class="balance-section">
-            <div class="balance-card owe">
-                <h3>You Owe</h3>
-                <p class="amount">$245</p>
-            </div>
-            <div class="balance-card owed">
-                <h3>You Are Owed</h3>
-                <p class="amount">$180</p>
-            </div>
-            <div class="balance-card total">
-                <h3>Total Balance</h3>
-                <p class="amount">-$65</p>
-            </div>
-        </section>
-
-        <!-- RECENT EXPENSES SECTION -->
-        <section class="expenses-section">
-            <h2>Recent Expenses</h2>
-            <div class="expense-list">
-                
-                <div class="expense-item">
-                    <div class="expense-info">
-                        <h4>Dinner at Restaurant</h4>
-                        <p class="expense-date">Oct 9, 2025</p>
-                    </div>
-                    <div class="expense-amount owe-amount">
-                        <p>You owe $500</p>
-                    </div>
-                </div>
-
-                <div class="expense-item">
-                    <div class="expense-info">
-                        <h4>Movie Tickets</h4>
-                        <p class="expense-date">Oct 8, 2025</p>
-                    </div>
-                    <div class="expense-amount owed-amount">
-                        <p>Vishesh owes you $300</p>
-                    </div>
-                </div>
-
-                <div class="expense-item">
-                    <div class="expense-info">
-                        <h4>Grocery Shopping</h4>
-                        <p class="expense-date">Oct 7, 2025</p>
-                    </div>
-                    <div class="expense-amount owe-amount">
-                        <p>You owe $850</p>
-                    </div>
-                </div>
-
-                <div class="expense-item">
-                    <div class="expense-info">
-                        <h4>Cab Fare</h4>
-                        <p class="expense-date">Oct 6, 2025</p>
-                    </div>
-                    <div class="expense-amount owed-amount">
-                        <p>Kartik owes you $200</p>
-                    </div>
-                </div>
-
-                <div class="expense-item">
-                    <div class="expense-info">
-                        <h4>Coffee</h4>
-                        <p class="expense-date">Oct 5, 2025</p>
-                    </div>
-                    <div class="expense-amount owe-amount">
-                        <p>You owe $150</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-    </div>
-
-    <!-- FLOATING ADD EXPENSE BUTTON -->
-    <button class="add-expense-btn">+</button>
-
-    <!-- ADD EXPENSE MODAL -->
-    <div class="modal-overlay" id="expenseModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Add Expense</h2>
-                <button class="close-btn" id="closeModal">&times;</button>
-            </div>
-            
-            <form class="expense-form" id="expenseForm">
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" id="description" placeholder="e.g., Dinner at restaurant" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="amount">Amount ($)</label>
-                    <input type="number" id="amount" placeholder="0" min="0" step="0.01" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="paidBy">Paid By</label>
-                    <select id="paidBy" required>
-                        <option value="">Select person</option>
-                        <option value="you">You</option>
-                        <option value="kartik">Kartik</option>
-                        <option value="vishesh">Vishesh</option>
-                        <option value="rikhil">Rikhil</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="splitWith">Split With</label>
-                    <select id="splitWith" required>
-                        <option value="">Select person</option>
-                        <option value="kartik">Kartik</option>
-                        <option value="vishesh">Vishesh</option>
-                        <option value="rikhil">Rikhil</option>
-                        <option value="group">Whole Group</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" required>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
-                    <button type="submit" class="btn-submit">Add Expense</button>
-                </div>
-            </form>
+    <div class="dashboard-container">
+      <!-- SUMMARY BOXES -->
+      <div class="summary-row">
+        <div class="summary-card">
+          <p class="label">YOU OWE</p>
+          <p class="value owe">${{ total_owe }}</p>
         </div>
+
+        <div class="summary-card">
+          <p class="label">YOU ARE OWED</p>
+          <p class="value owed">${{ total_owed }}</p>
+        </div>
+
+        <div class="summary-card">
+          <p class="label">TOTAL BALANCE</p>
+          <p
+            class="value total {% if total_balance > 0 %}positive{% elif total_balance < 0 %}negative{% endif %}"
+          >
+            ${{ total_balance }}
+          </p>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY -->
+      <h2 class="section-title">Recent Activity</h2>
+
+      <div class="activity-list">
+        {% if recent_expenses %} {% for item in recent_expenses %}
+        <div class="activity-card">
+          <div>
+            <h3 class="activity-title">{{ item.description }}</h3>
+            <p class="activity-date">{{ item.created_at[:10] }}</p>
+          </div>
+          <p class="amount">${{ item.amount }}</p>
+        </div>
+        {% endfor %} {% else %}
+        <p class="empty-msg">No recent activity</p>
+        {% endif %}
+      </div>
     </div>
-
-    <!-- FOOTER - Component include -->
-    {% include 'components/footer.html' %}
-
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mobile-menu.js') }}"></script>
-</body>
+  </body>
 </html>

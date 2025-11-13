@@ -8,6 +8,7 @@ from flask_wtf import CSRFProtect
 from blueprints.groups import group_bp
 from blueprints.expenses import expenses_bp
 from blueprints.payments import payments_bp  
+from services.compute_group_balances import compute_group_balances
 
 
 app = Flask(__name__)
@@ -26,7 +27,29 @@ def year():
 @app.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template('index.html', current_year=datetime.now().year) 
+    user_id = session.get('user_id')
+    group_member_res = supabase.table('group_members').select('group_id').eq('user_id',user_id).execute()
+    group_ids = [g['group_id'] for g in group_member_res.data or []]
+    total_owed = 0 
+    total_owe = 0
+    for gid in group_ids:
+        balances = compute_group_balances(gid)
+        user_balances = next((b for b in balances if b['user_id']==user_id),None)
+        if user_balances:
+            if user_balances['net'] > 0:
+                total_owed += user_balances['net']
+            elif user_balances['net'] < 0:
+                total_owe += abs(user_balances['net'])
+    total_balance = total_owed - total_owe
+    recent_res = supabase.table('expenses').select('description,amount,created_at,users:paid_by(username)').in_('group_id', group_ids) \
+                         .order('created_at', desc=True) \
+                         .limit(3) \
+                         .execute()
+    recent_expenses = recent_res.data or []
+    return render_template('index.html',  total_owed=round(total_owed, 2),
+                           total_owe=round(total_owe, 2),
+                           total_balance=round(total_balance, 2),
+                           recent_expenses=recent_expenses)
 
 
 @app.route('/')

@@ -22,6 +22,9 @@ def signin():
             return redirect(url_for('auth.signin'))
         session['user_id'] = user['id']
         session['username'] = user['username']
+        pending_token = session.pop('pending_invite', None)
+        if pending_token:
+            return redirect(url_for('friends.accept_invite', token=pending_token))
         flash(f"Welcome back, {user['username']}!", 'success')
         return redirect(url_for('dashboard'))
     return render_template('login.html', current_year=datetime.now().year, form=form)

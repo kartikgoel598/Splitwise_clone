@@ -3,42 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/mobile-responsive.css') }}"
-    />
     <title>Splitwisely - Home</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/page-transitions.css') }}"
-    />
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-responsive.css') }}" />
   </head>
   <body>
     {% include 'components/navbar.html' %}
 
     <div class="dashboard-container">
+      
       <!-- SUMMARY BOXES -->
       <div class="summary-row">
         <div class="summary-card">
           <p class="label">YOU OWE</p>
-          <p class="value owe">${{ total_owe }}</p>
+          <p class="value owe">${{ "%.2f"|format(total_owe) }}</p>
         </div>
 
         <div class="summary-card">
           <p class="label">YOU ARE OWED</p>
-          <p class="value owed">${{ total_owed }}</p>
+          <p class="value owed">${{ "%.2f"|format(total_owed) }}</p>
         </div>
 
         <div class="summary-card">
           <p class="label">TOTAL BALANCE</p>
-          <p
-            class="value total {% if total_balance > 0 %}positive{% elif total_balance < 0 %}negative{% endif %}"
-          >
-            ${{ total_balance }}
+          <p class="value total {% if total_balance > 0 %}positive{% elif total_balance < 0 %}negative{% endif %}">
+            ${{ "%.2f"|format(total_balance|abs) }}
           </p>
         </div>
       </div>
@@ -47,19 +40,24 @@
       <h2 class="section-title">Recent Activity</h2>
 
       <div class="activity-list">
-        {% if recent_expenses %} {% for item in recent_expenses %}
-        <div class="activity-card">
-          <div>
-            <h3 class="activity-title">{{ item.description }}</h3>
-            <p class="activity-date">{{ item.created_at[:10] }}</p>
-          </div>
-          <p class="amount">${{ item.amount }}</p>
-        </div>
-        {% endfor %} {% else %}
-        <p class="empty-msg">No recent activity</p>
+        {% if recent_expenses %}
+          {% for item in recent_expenses %}
+            <div class="activity-card">
+              <div>
+                <h3 class="activity-title">{{ item.description }}</h3>
+                <p class="activity-date">{{ item.created_at[:10] }}</p>
+              </div>
+              <p class="amount">${{ "%.2f"|format(item.amount) }}</p>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="empty-msg">No recent activity 📊</p>
         {% endif %}
       </div>
     </div>
+
+    {% include 'components/footer.html' %}
+
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mobile-menu.js') }}"></script>
   </body>

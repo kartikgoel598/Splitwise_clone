@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from services.extension import mail
 from datetime import datetime
 from services.db import supabase
 import os 
@@ -7,8 +8,11 @@ from services.login_required import login_required
 from flask_wtf import CSRFProtect
 from blueprints.groups import group_bp
 from blueprints.expenses import expenses_bp
-from blueprints.payments import payments_bp  
+from blueprints.payments import payments_bp 
+from blueprints.friends import friends_bp 
 from services.compute_group_balances import compute_group_balances
+
+
 
 
 app = Flask(__name__)
@@ -17,6 +21,16 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY', "dev-secret")
 app.config["WTF_CSRF_ENABLED"] = False
 csrf = CSRFProtect()
 csrf.init_app(app)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.getenv("EMAIL_USER")
+app.config['MAIL_PASSWORD'] = os.getenv("EMAIL_PASSWORD")
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv("EMAIL_USER")
+
+mail.init_app(app)
+
+
 
 
 @app.context_processor
@@ -57,24 +71,17 @@ def landing():
     return render_template('landing.html', current_year=datetime.now().year)
 
 
-# ===== FRIENDS PAGE ROUTE =====
-@app.route("/friends")
-@login_required
-def friends():
-    return render_template('friends.html', current_year=datetime.now().year)
 
 
-# ===== ACTIVITY PAGE ROUTE =====
-@app.route("/activity")
-@login_required
-def activity():
-    return render_template('activity.html', current_year=datetime.now().year)
+
+
 
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(group_bp)
 app.register_blueprint(expenses_bp)
 app.register_blueprint(payments_bp)
+app.register_blueprint(friends_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

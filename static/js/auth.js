@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // password hide karo
                 passwordInput.type = 'password';
-                this.textContent = '👁️'; // change icon to show
+                this.textContent = '👁'; // change icon to show
             }
         });
     });
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Password reset requested for:', email);
             
             if (!email) {
-                alert('Please enter your email address! ⚠️');
+                alert('Please enter your email address! ⚠');
                 return;
             }
             
@@ -152,6 +152,5 @@ document.addEventListener('DOMContentLoaded', function() {
             if (label && label.classList.contains('form-label')) {
                 label.style.color = '#2d3748';
             }
-        });
-    });
-    
+        });
+    });

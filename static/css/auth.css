@@ -420,3 +420,161 @@ body {
         align-items: flex-start;
     }
 }
+/* ===== ERROR & SUCCESS POPUP STYLING ===== */
+.error-popup,
+.success-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.error-popup.show,
+.success-popup.show {
+    opacity: 1;
+}
+
+.error-popup .popup-content,
+.success-popup .popup-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: popupSlideIn 0.3s ease;
+}
+
+@keyframes popupSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.popup-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: iconBounce 0.5s ease;
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.popup-message {
+    font-size: 18px;
+    color: #2d3748;
+    font-weight: 600;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.popup-close {
+    padding: 12px 40px;
+    background: linear-gradient(135deg, #1cc29f, #17a085);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(28, 194, 159, 0.3);
+}
+
+.popup-close:hover {
+    background: linear-gradient(135deg, #17a085, #149174);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(28, 194, 159, 0.4);
+}
+
+/* Error popup specific styling */
+.error-popup .popup-content {
+    border-top: 5px solid #ff6b6b;
+}
+
+/* Success popup specific styling */
+.success-popup .popup-content {
+    border-top: 5px solid #1cc29f;
+}
+
+/* Password wrapper fix */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .form-input {
+    flex: 1;
+    padding-right: 50px; /* space for toggle button */
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.password-toggle:hover {
+    transform: scale(1.2);
+}
+
+/* Flash message container (hide karo, JS popup use karenge) */
+.flash-message {
+    display: none !important;
+}
+
+/* Dark mode support */
+body.dark-mode .error-popup .popup-content,
+body.dark-mode .success-popup .popup-content {
+    background: #2d3748;
+}
+
+body.dark-mode .popup-message {
+    color: #e2e8f0;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .error-popup .popup-content,
+    .success-popup .popup-content {
+        width: 95%;
+        padding: 30px 20px;
+    }
+    
+    .popup-icon {
+        font-size: 50px;
+    }
+    
+    .popup-message {
+        font-size: 16px;
+    }
+}

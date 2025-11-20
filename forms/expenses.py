@@ -9,10 +9,5 @@ class AddExpenseForm(FlaskForm):
     )
     amount = DecimalField('amount',validators=[DataRequired(),NumberRange(min=0.01)],places=2)
     paid_by = SelectField('paid_by',coerce=str,validators=[DataRequired()])
-    split_type = RadioField(
-        'split_type',
-        choices=[('equal','Equal'),('unequal','Unequal')],
-        default='equal',
-        validators=[DataRequired()]
-    )
+    
     submit = SubmitField('Add Expense')

@@ -1,0 +1,295 @@
+/* ===== DASHBOARD PAGE STYLING ===== */
+
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* ===== SUMMARY BOXES ===== */
+.summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.summary-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1cc29f, #17a085);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.summary-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Labels */
+.label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 12px 0;
+}
+
+/* Values */
+.value {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.value.owe {
+    color: #ff6b6b;
+}
+
+.value.owed {
+    color: #1cc29f;
+}
+
+.value.total {
+    color: #2d3748;
+}
+
+.value.total.positive {
+    color: #1cc29f;
+}
+
+.value.total.negative {
+    color: #ff6b6b;
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #e2e8f0;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #1cc29f, #17a085);
+}
+
+/* ===== ACTIVITY LIST ===== */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activity-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid #1cc29f;
+    transition: all 0.3s ease;
+}
+
+.activity-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    border-left-color: #17a085;
+}
+
+.activity-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 6px 0;
+}
+
+.activity-date {
+    font-size: 13px;
+    color: #718096;
+    margin: 0;
+}
+
+.activity-card .amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1cc29f;
+    margin: 0;
+}
+
+/* Empty Message */
+.empty-msg {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 16px;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== DARK MODE ===== */
+body.dark-mode .dashboard-container {
+    color: #e2e8f0;
+}
+
+body.dark-mode .summary-card {
+    background: #2d3748;
+}
+
+body.dark-mode .label {
+    color: #a0aec0;
+}
+
+body.dark-mode .value.total {
+    color: #e2e8f0;
+}
+
+body.dark-mode .section-title {
+    color: #e2e8f0;
+    border-bottom-color: #4a5568;
+}
+
+body.dark-mode .activity-card {
+    background: #2d3748;
+}
+
+body.dark-mode .activity-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .activity-date {
+    color: #a0aec0;
+}
+
+body.dark-mode .empty-msg {
+    background: #2d3748;
+    color: #a0aec0;
+}
+
+/* ===== LOADING ANIMATION ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.summary-card,
+.activity-card {
+    animation: fadeInUp 0.5s ease;
+}
+
+.summary-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.summary-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.summary-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .summary-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .summary-card {
+        padding: 25px;
+    }
+
+    .value {
+        font-size: 32px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 0 15px;
+    }
+
+    .activity-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 18px 20px;
+    }
+
+    .activity-card .amount {
+        font-size: 20px;
+        align-self: flex-end;
+    }
+
+    .activity-title {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .summary-card {
+        padding: 20px;
+    }
+
+    .value {
+        font-size: 28px;
+    }
+
+    .label {
+        font-size: 11px;
+    }
+
+    .section-title {
+        font-size: 22px;
+    }
+
+    .activity-title {
+        font-size: 15px;
+    }
+}

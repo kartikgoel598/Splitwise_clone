@@ -113,7 +113,7 @@ def group_detail(group_id):
  
     return render_template("group_detail.html", group=group, members=members, expenses=expenses, balances=balances,add_expense_form=add_expense_form,
         settle_form=settle_form,delete_group_form=delete_group_form)
-
+ 
 @group_bp.route('/<group_id>/delete',methods = ['POST','GET'])
 @login_required
 def delete_group(group_id):
@@ -138,7 +138,7 @@ def delete_group(group_id):
     supabase.table('settlements').delete().eq('group_id',group_id).execute()
     flash('Group deleted successfully','success')
     return redirect(url_for('groups.index'))
-
+ 
 @group_bp.route('/<group_id>/edit', methods=['GET','POST'])
 @login_required
 def edit_group(group_id):
@@ -158,7 +158,7 @@ def edit_group(group_id):
     member_res = supabase.table('group_members').select('user_id,users(username),role').eq('group_id',group_id).execute()
     member = member_res.data or []
     edit_form.member_to_remove.choices = [(m['user_id'],m['users']['username']) for m in member if m['user_id']!=user_id]
-
+ 
     if edit_form.validate_on_submit():
         changes_made = False
         new_name = edit_form.group_name.data.strip()
@@ -167,8 +167,8 @@ def edit_group(group_id):
             supabase.table('groups').update({'name':new_name}).eq('id',group_id).execute()
             flash('Group name updated','success')
             changes_made = True
-
-
+ 
+ 
         if edit_form.email.data:
             email_to_add = edit_form.email.data.strip().lower()
             check_user = supabase.table('users').select('id').eq('email',email_to_add).limit(1).execute()
@@ -188,7 +188,7 @@ def edit_group(group_id):
                     }).execute()
                     flash(f'User with email {email_to_add} added to group','success')
                     changes_made = True
-            
+           
         if edit_form.member_to_remove.data:
             user_id_to_remove = edit_form.member_to_remove.data
             balances = compute_group_balances(group_id)
@@ -207,10 +207,3 @@ def edit_group(group_id):
         edit_form=edit_form,
         group=group,
         member=member)
-    
-        
-
-
-
-
-    

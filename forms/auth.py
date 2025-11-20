@@ -28,5 +28,3 @@ class SignUpForm(FlaskForm):
         existing = supabase.table('users').select('id').eq('email',email).limit(1).execute()
         if existing.data:
             raise validators.ValidationError('email already registered')
-
-    

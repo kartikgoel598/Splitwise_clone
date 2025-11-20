@@ -1,327 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Friends - Split Wisely</title>
-    
+ 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-responsive.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/page-transitions.css') }}">
 </head>
+ 
 <body>
-    
     {% include 'components/navbar.html' %}
-
+ 
     <div class="main-container">
-        
+ 
+        <!-- HEADER -->
         <div class="page-header">
             <h1 class="page-title">My Friends</h1>
-            <button class="add-friend-btn" id="openAddFriendModal">
-                <span class="btn-icon">+</span>
-                Add Friend
-            </button>
+            <button class="add-friend-btn" id="openAddFriendModal">+ Add Friend</button>
         </div>
-
+ 
+        <!-- FRIEND LIST -->
         <div class="friends-list">
-            
-            <!-- Friend 1: Kartik (You Owe) -->
-            <div class="friend-card" data-friend-id="1">
-                <div class="friend-profile">
-                    <div class="friend-avatar">👨‍💼</div>
-                    <div class="friend-details">
-                        <h3 class="friend-name">Kartik</h3>
-                        <p class="friend-activity">Last expense: 2 days ago</p>
+            {% if friends %}
+                {% for f in friends %}
+                <div class="friend-card">
+ 
+                    <!-- LEFT SIDE: AVATAR + NAME + STATUS -->
+                    <div class="friend-info">
+                        <div class="friend-avatar">{{ f.username[0] | upper }}</div>
+ 
+                        <div>
+                            <h3 class="friend-name">{{ f.username }}</h3>
+ 
+                            {% if f.balance > 0 %}
+                                <p class="friend-status positive">Owes You</p>
+                            {% elif f.balance < 0 %}
+                                <p class="friend-status negative">You Owe</p>
+                            {% else %}
+                                <p class="friend-status settled">Settled</p>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                <div class="friend-actions">
-                    <div class="friend-balance">
-                        <p class="balance-text owe">You owe</p>
-                        <p class="balance-amount owe">$125</p>
+ 
+                    <!-- RIGHT SIDE: AMOUNT + BUTTON -->
+                    <div class="friend-actions">
+                        {% if f.balance > 0 %}
+                            <p class="amount positive">+ ${{ "%.2f"|format(f.balance) }}</p>
+                            <button
+                                class="remind-btn"
+                                data-friend="{{ f.username }}"
+                                data-email="{{ f.email }}"
+                                data-friend-id="{{ f.id }}"
+                                data-amount="{{ f.balance }}"
+                            >
+                                Remind
+                            </button>
+ 
+                        {% elif f.balance < 0 %}
+                            <p class="amount negative">- ${{ "%.2f"|format(f.balance|abs) }}</p>
+                            <p class="note">(You Owe)</p>
+ 
+                        {% else %}
+                            <p class="amount settled">$0.00</p>
+                            <button class="disabled-btn" disabled>Settled</button>
+                        {% endif %}
                     </div>
-                    <button class="settle-btn" data-friend="Kartik" data-amount="125">
-                        Settle Up
-                    </button>
+ 
                 </div>
-            </div>
-
-            <!-- Friend 2: Vishesh (Owes You) -->
-            <div class="friend-card" data-friend-id="2">
-                <div class="friend-profile">
-                    <div class="friend-avatar">🧑‍💻</div>
-                    <div class="friend-details">
-                        <h3 class="friend-name">Vishesh</h3>
-                        <p class="friend-activity">Last expense: 5 days ago</p>
-                    </div>
-                </div>
-                <div class="friend-actions">
-                    <div class="friend-balance">
-                        <p class="balance-text owed">Owes you</p>
-                        <p class="balance-amount owed">$230</p>
-                    </div>
-                    <button class="remind-btn" data-friend="Vishesh" data-amount="230" data-email="vishesh@example.com">
-                        Remind
-                    </button>
-                </div>
-            </div>
-
-            <!-- Friend 3: Rikhil (Settled) -->
-            <div class="friend-card" data-friend-id="3">
-                <div class="friend-profile">
-                    <div class="friend-avatar">👨‍🎓</div>
-                    <div class="friend-details">
-                        <h3 class="friend-name">Rikhil</h3>
-                        <p class="friend-activity">Last expense: 1 week ago</p>
-                    </div>
-                </div>
-                <div class="friend-actions">
-                    <div class="friend-balance">
-                        <p class="balance-text settled">Settled up</p>
-                        <p class="balance-amount settled">$0</p>
-                    </div>
-                    <button class="settle-btn disabled" disabled>
-                        All Clear
-                    </button>
-                </div>
-            </div>
-
-            <!-- Friend 4: Samullah -->
-            <div class="friend-card" data-friend-id="4">
-                <div class="friend-profile">
-                    <div class="friend-avatar">👩‍💼</div>
-                    <div class="friend-details">
-                        <h3 class="friend-name">Samullah</h3>
-                        <p class="friend-activity">Last expense: 3 days ago</p>
-                    </div>
-                </div>
-                <div class="friend-actions">
-                    <div class="friend-balance">
-                        <p class="balance-text owe">You owe</p>
-                        <p class="balance-amount owe">$85</p>
-                    </div>
-                    <button class="settle-btn" data-friend="Samullah" data-amount="85">
-                        Settle Up
-                    </button>
-                </div>
-            </div>
-
-            <!-- Friend 5: Santosh (Owes You) -->
-            <div class="friend-card" data-friend-id="5">
-                <div class="friend-profile">
-                    <div class="friend-avatar">🧑‍🚀</div>
-                    <div class="friend-details">
-                        <h3 class="friend-name">Santosh</h3>
-                        <p class="friend-activity">Last expense: yesterday</p>
-                    </div>
-                </div>
-                <div class="friend-actions">
-                    <div class="friend-balance">
-                        <p class="balance-text owed">Owes you</p>
-                        <p class="balance-amount owed">$420</p>
-                    </div>
-                    <button class="remind-btn" data-friend="Santosh" data-amount="420" data-email="santosh@example.com">
-                        Remind
-                    </button>
-                </div>
-            </div>
-
-            <!-- Friend 6: Wilson -->
-            <div class="friend-card" data-friend-id="6">
-                <div class="friend-profile">
-                    <div class="friend-avatar">👩‍🎨</div>
-                    <div class="friend-details">
-                        <h3 class="friend-name">Wilson</h3>
-                        <p class="friend-activity">Last expense: 4 days ago</p>
-                    </div>
-                </div>
-                <div class="friend-actions">
-                    <div class="friend-balance">
-                        <p class="balance-text owe">You owe</p>
-                        <p class="balance-amount owe">$60</p>
-                    </div>
-                    <button class="settle-btn" data-friend="Wilson" data-amount="60">
-                        Settle Up
-                    </button>
-                </div>
-            </div>
-
+                {% endfor %}
+            {% else %}
+                <p class="empty-msg">No friends added yet.</p>
+            {% endif %}
         </div>
-
+ 
     </div>
-
-    <!-- ADD FRIEND MODAL -->
+ 
+    <!-- ========== ADD FRIEND MODAL ========== -->
     <div class="modal-overlay" id="addFriendModal">
         <div class="modal-content">
+ 
             <div class="modal-header">
-                <h2>Add New Friend</h2>
+                <h2>Add Friend</h2>
                 <button class="close-modal" id="closeAddFriendModal">&times;</button>
             </div>
-
-            <form class="modal-form" id="addFriendForm">
+ 
+            <form id="addFriendForm" class="modal-form" method="POST" action="{{ url_for('friends.invite_friend') }}">
                 <div class="form-group">
-                    <label class="form-label">Friend's Email <span class="required">*</span></label>
-                    <input 
-                        type="email" 
-                        class="form-input" 
-                        id="friendEmail"
-                        placeholder="friend@example.com"
-                        required
-                    >
+                    <label class="form-label">Friend’s Email *</label>
+                    <input type="email" name="email" id="friendEmail" class="form-input" required />
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Friend's Name <span class="optional">(optional)</span></label>
-                    <input 
-                        type="text" 
-                        class="form-input" 
-                        id="friendName"
-                        placeholder="John Doe"
-                    >
-                </div>
-
+ 
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" id="cancelAddFriend">Cancel</button>
                     <button type="submit" class="btn-submit">Send Invitation</button>
                 </div>
             </form>
+ 
         </div>
     </div>
-
-    <!-- SETTLE UP MODAL -->
-    <div class="modal-overlay" id="settleUpModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Settle Up</h2>
-                <button class="close-modal" id="closeSettleModal">&times;</button>
-            </div>
-
-            <form class="modal-form" id="settleUpForm">
-                <div class="form-group">
-                    <label class="form-label">Settling with</label>
-                    <input 
-                        type="text" 
-                        class="form-input" 
-                        id="settleFriendName"
-                        readonly
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Amount <span class="required">*</span></label>
-                    <div class="amount-input-group">
-                        <span class="dollar-sign">$</span>
-                        <input 
-                            type="number" 
-                            class="form-input amount-input" 
-                            id="settleAmount"
-                            placeholder="0.00"
-                            step="0.01"
-                            required
-                        >
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Payment Method</label>
-                    <div class="payment-methods">
-                        <label class="payment-option">
-                            <input type="radio" name="paymentMethod" value="bank" checked>
-                            <div class="payment-card">
-                                <span class="payment-icon">🏦</span>
-                                <span class="payment-name">Bank Transfer</span>
-                            </div>
-                        </label>
-                        <label class="payment-option">
-                            <input type="radio" name="paymentMethod" value="card">
-                            <div class="payment-card">
-                                <span class="payment-icon">💳</span>
-                                <span class="payment-name">Card</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Note <span class="optional">(optional)</span></label>
-                    <textarea 
-                        class="form-textarea" 
-                        id="settleNote"
-                        placeholder="Add a note..."
-                        rows="3"
-                    ></textarea>
-                </div>
-
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" id="cancelSettle">Cancel</button>
-                    <button type="submit" class="btn-submit">Settle Payment</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- REMIND MODAL -->
+ 
+    <!-- ========== REMIND MODAL ========== -->
     <div class="modal-overlay" id="remindModal">
         <div class="modal-content">
+ 
             <div class="modal-header">
-                <h2>✈️ Send Reminder</h2>
+                <h2>Send Reminder</h2>
                 <button class="close-modal" id="closeRemindModal">&times;</button>
             </div>
-
-            <form class="modal-form" id="remindForm">
+ 
+            <form id="remindForm" class="modal-form">
                 <div class="form-group">
-                    <label class="form-label">Reminding</label>
-                    <input 
-                        type="text" 
-                        class="form-input" 
-                        id="remindFriendName"
-                        readonly
-                    >
+                    <label class="form-label">Friend</label>
+                    <input type="text" id="remindFriendName" class="form-input" readonly />
                 </div>
-
+ 
                 <div class="form-group">
-                    <label class="form-label">Amount Owed</label>
-                    <div class="amount-input-group">
-                        <span class="dollar-sign">$</span>
-                        <input 
-                            type="number" 
-                            class="form-input amount-input" 
-                            id="remindAmount"
-                            readonly
-                        >
-                    </div>
+                    <label class="form-label">Amount</label>
+                    <input type="number" id="remindAmount" class="form-input" readonly />
                 </div>
-
+ 
                 <div class="form-group">
                     <label class="form-label">Message</label>
-                    <div class="reminder-placeholder">
-                        💡 <strong>Example:</strong> "Hey! Just a friendly reminder about the $230 from last week's dinner. Thanks!"
-                    </div>
-                    <textarea 
-                        class="form-textarea" 
-                        id="remindMessage"
-                        placeholder="Add a personal message (optional)..."
-                        rows="4"
-                    ></textarea>
+                    <textarea id="remindMessage" class="form-input" rows="3"></textarea>
                 </div>
-
+ 
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" id="cancelRemind">Cancel</button>
-                    <button type="submit" class="btn-submit">✈️ Send Reminder</button>
+                    <button type="submit" class="btn-submit">Send Reminder</button>
                 </div>
             </form>
+ 
         </div>
     </div>
-
-    <!-- Paper Plane Animation -->
-    <div class="plane-animation" id="planeAnimation">✈️</div>
-
-    <!-- Success Message -->
-    <div class="success-message" id="successMessage"></div>
-
+ 
     {% include 'components/footer.html' %}
-
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+ 
     <script src="{{ url_for('static', filename='js/friends.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>

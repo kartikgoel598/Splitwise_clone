@@ -32,7 +32,6 @@ def add_expenses(group_id):
         description = form.description.data.strip()
         amount = float(form.amount.data)
         paid_by = form.paid_by.data
-        split_type = form.split_type.data
         uid = session.get('user_id')
 
         expenses_res = supabase.table('expenses').insert({

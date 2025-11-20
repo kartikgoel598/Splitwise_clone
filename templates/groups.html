@@ -60,12 +60,11 @@
     });
   });
 });
+
 </script>
+    {% include 'components/footer.html' %}
 
-
-
-    <script src="../static/js/app.js"></script>
-    <script src="../static/js/groups.js"></script>
-    <script src="../static/js/mobile-menu.js"></script>
-  </body>
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
 </html>
